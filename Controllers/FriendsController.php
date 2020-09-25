@@ -21,7 +21,7 @@ class FriendsController
     {
         $season = $params[':SeasonNumber'];
         $chapters = $this->model->GetChapters($season);
-        $this->view->RenderList($chapters);
+        $this->view->RenderList($chapters,$season);
     }
 
     function CheckIfExists($new_title)
