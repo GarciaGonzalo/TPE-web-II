@@ -1,2 +1,3 @@
 test.html
 templates_c/*
+!templates_c/.gitkeep
