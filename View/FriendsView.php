@@ -12,6 +12,8 @@ class FriendsView
 
     function RenderHome()
     {
+        $this->smarty->assign('home_location',BASE_URL);
+
         $this->smarty->display('templates/home.tpl');
     }
 
@@ -19,6 +21,7 @@ class FriendsView
     { 
         $this->smarty->assign('chapters',$chapters);
         $this->smarty->assign('season',$season);
+        $this->smarty->assign('home_location',BASE_URL);
 
         $this->smarty->display('templates/dinamicList.tpl');
     }

@@ -1,49 +1,14 @@
-{include file="header.tpl"}
-<h1>F.R.I.E.N.D.S chapters</h1>
-            <a href="season/1">season number 1</a>
-            <a href="season/2">season number 2</a>
-            <a href="season/3">season number 3</a>
-            <a href="season/4">season number 4</a>
-            <a href="season/5">season number 5</a>
-            <a href="season/6">season number 6</a>
-            <a href="season/7">season number 7</a>
-            <a href="season/8">season number 8</a>
-            <a href="season/9">season number 9</a>
-            <a href="season/10">season number 10</a>
-            <a href="season/all">all seasons</a>
+{include file="head.tpl"}
 
-            <form action="New" method="POST">
-            <label for="title">title</label>
-            <input type="text" name="title_input">
-            <br>
-            
-            <label for="director">director</label>
-            <input type="text" name="director_input">
-            <br>
-            
-            <label for="writer">writer</label>
-            <input type="text" name="writer_input">
-            <br>
-            
-            <label for="description">description</label>
-            <input type="text" name="description_input">
-            <br>
-            
-            <label for="emision_date">emision date</label>
-            <input type="date" name="emision_date_input">
-            <br>
-            
-            <label for="season">season</label>
-            <input type="number" name="season_input">
-            <br>
+{include file="navbar.tpl" home_location=$home_location}
 
-            <label for="chapter_count">chapter number within its season</label>
-            <input type="text" name="chapter_count_input">
-            <br>
+<div class="text-white main_content bg-dark container text-center">
 
-            <button type="submit">Subir capitulo</button>
-        </form>
-        </body>
-        
-        
-        </html>
+    <img src="./images/title.jpg" class="img-fluid" alt="Responsive image">
+
+    <h2> subtitle </h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam numquam quibusdam tempora ab, eum voluptatem laborum rem ullam iure, saepe quidem! Possimus facere reiciendis sunt doloremque voluptatem reprehenderit nemo quod. Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, laboriosam nisi enim molestiae ipsum odio iusto? Autem consectetur esse iste accusantium maiores temporibus eveniet quo praesentium eum. Quasi, consectetur. Voluptate?</p>
+
+
+</div>
+{include file="scripts.tpl" }
