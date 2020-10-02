@@ -19,7 +19,7 @@
                     <td class="align-middle">{$chapter->director}</td>
                     <td class="align-middle">{$chapter->writer}</td>
                     <!----$chapter->thumbnail_path ---->
-                    <td class="d-flex flex-column"><img src="../images/thumbnail 1.png" alt="thumbnail {$chapter->title}" class="img-thumbnail">
+                    <td class="d-flex flex-column"><img src="images/thumbnail 1.png" alt="thumbnail {$chapter->title}" class="img-thumbnail">
                     <span>{$chapter->emision_date}</span></td>
                 </tr>
             {/foreach}

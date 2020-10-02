@@ -8,7 +8,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Seasons
                 </a>
-                <div class=" position-absolute dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class=" position-absolute dropdown-menu bg-danger" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{$home_location}season/1">season 1</a>
                     <a class="dropdown-item" href="{$home_location}season/2">season 2</a>
                     <a class="dropdown-item" href="{$home_location}season/3">season 3</a>

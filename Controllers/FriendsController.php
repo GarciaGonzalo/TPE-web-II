@@ -13,8 +13,7 @@ class FriendsController
 
     function Home()
     {
-        $chapters = $this->model->GetChapters();
-        $this->view->RenderHome($chapters);
+        $this->view->RenderHome();
     }
 
     function LoadSeason($params = null)
