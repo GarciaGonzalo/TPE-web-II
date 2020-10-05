@@ -1,5 +1,5 @@
 <?php
-class FriendsModel
+class ChapterModel
 {
     private $db;
     function __construct()

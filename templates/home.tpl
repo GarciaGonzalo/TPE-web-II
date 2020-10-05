@@ -1,6 +1,6 @@
 {include file="head.tpl"}
 
-{include file="navbar.tpl" home_location=$home_location}
+{include file="navbar.tpl" logged=$logged seasons=$seasons}
 
 <div class="text-white main_content bg-dark container text-center">
 

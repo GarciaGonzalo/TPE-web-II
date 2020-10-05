@@ -1,5 +1,6 @@
 <?php
     require_once 'Controllers/FriendsController.php';
+    require_once 'Controllers/UserController.php';
     require_once 'RouterClass.php';
     
     // CONSTANTES PARA RUTEO
@@ -12,6 +13,8 @@
     $r->addRoute("mermelada", "GET", "FriendsController", "Home");
     $r->addRoute("season/:SeasonNumber","GET","FriendsController","LoadSeason");
     $r->addRoute("New","POST","FriendsController","InputChapter");
+    $r->addRoute("login","GET","UserController","Login");
+    $r->addRoute("verify","POST","UserController","VerifyUser");
     //Ruta por defecto.
     $r->setDefaultRoute("FriendsController", "Home");
 
