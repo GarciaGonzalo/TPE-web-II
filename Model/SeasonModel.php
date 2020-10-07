@@ -18,4 +18,9 @@ class SeasonModel{
         }
        return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
+    function GetSeasonId($season_number){
+        $sentencia= $this->db->prepare("SELECT id FROM season WHERE season.season = ?");
+        $sentencia->execute(array($season_number));
+        return $sentencia->fetch(PDO::FETCH_OBJ);
+    }
 }

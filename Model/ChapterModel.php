@@ -10,7 +10,7 @@ class ChapterModel
     function GetChapters($season = null)
     {
         if ($season !== "all") {
-            $sentencia = $this->db->prepare("SELECT * FROM chapter INNER JOIN season ON chapter.id_season = season.id AND season.season = ? ORDER BY emision_date ASC");
+            $sentencia = $this->db->prepare("SELECT * FROM chapter Where id_season = ? ORDER BY emision_date ASC");
             $sentencia->execute(array($season));
         }
         else {

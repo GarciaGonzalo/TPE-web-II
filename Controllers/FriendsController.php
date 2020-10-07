@@ -31,7 +31,8 @@ class FriendsController
     {
         $seasons = $this->season_controller->GetSeasons();
         $season = $params[':SeasonNumber'];
-        $chapters = $this->chapter_model->GetChapters($season);
+        $id_season = $this->season_controller->GetSeasonId($season);
+        $chapters = $this->chapter_model->GetChapters($id_season->id);
         $logged = $this->user_controller->CheckLoggedIn();
         $this->view->RenderList($chapters, $season, $seasons,$logged);
     }

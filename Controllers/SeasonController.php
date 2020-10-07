@@ -11,4 +11,7 @@ class SeasonController
     {
        return $this->model->GetSeasons();
     }
+    function GetSeasonId($season){
+       return $this->model->GetSeasonId($season);
+    }
 }
