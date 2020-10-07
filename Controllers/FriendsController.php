@@ -31,8 +31,13 @@ class FriendsController
     {
         $seasons = $this->season_controller->GetSeasons();
         $season = $params[':SeasonNumber'];
-        $id_season = $this->season_controller->GetSeasonId($season);
-        $chapters = $this->chapter_model->GetChapters($id_season->id);
+        if ($season !== 'all') {
+            $id_season = $this->season_controller->GetSeasonId($season);
+            $chapters = $this->chapter_model->GetChapters($id_season->id);
+        }
+        else {
+            $chapters = $this->chapter_model->GetChapters('all'); 
+        }
         $logged = $this->user_controller->CheckLoggedIn();
         $this->view->RenderList($chapters, $season, $seasons,$logged);
     }
