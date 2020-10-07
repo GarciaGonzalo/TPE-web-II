@@ -20,15 +20,16 @@
                     <td class="align-middle">{$chapter->writer}</td>
                     <!----$chapter->thumbnail_path ---->
                     <td class="d-flex flex-column"><img src="images/thumbnail 1.png" alt="thumbnail {$chapter->title}" class="img-thumbnail">
-                    <span>{$chapter->emision_date}</span></td>
-                    <td class="align-middle"><button id="ver_detalle" type="button" class="btn btn-secondary"><a href="detalle/{$chapter->id}">Ver detalle</button>
-                    {if $logged == true}
-                        <button id="ver_detalle" type="button" class="btn btn-warning"><a href="edit/{$chapter->id}">Editar</button>
-                        <button id="ver_detalle" type="button" class="btn btn-danger"><a href="delete/{$chapter->id}">Borrar</button>
-                    {/if}</td>
+                        <span>{$chapter->emision_date}</span></td>
+                    <td class="align-middle"><a href="detalle/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-secondary">Ver detalle</button></a>
+                        {if $logged == true}
+                            <a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Editar</button></a>
+                            <a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Borrar</button></a>
+                        {/if}
+                    </td>
                 </tr>
             {/foreach}
         </tbody>
-        </table>
+    </table>
 </div>
 {include file="scripts.tpl"}

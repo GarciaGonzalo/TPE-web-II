@@ -1,5 +1,5 @@
 <?php
-    require_once 'Controllers/FriendsController.php';
+    require_once 'Controllers/ChapterController.php';
     require_once 'Controllers/UserController.php';
     require_once 'RouterClass.php';
     
@@ -9,17 +9,18 @@
     $r = new Router();
 
     // rutas
-    $r->addRoute("home", "GET", "FriendsController", "Home");
-    $r->addRoute("mermelada", "GET", "FriendsController", "Home");
-    $r->addRoute("season/:SeasonNumber","GET","FriendsController","LoadSeason");
-    $r->addRoute("New","POST","FriendsController","InputChapter");
+    $r->addRoute("home", "GET", "ChapterController", "Home");
+    $r->addRoute("mermelada", "GET", "ChapterController", "Home");
+    $r->addRoute("season/:SeasonNumber","GET","ChapterController","LoadSeason");
+    $r->addRoute("New","POST","ChapterController","InputChapter");
     $r->addRoute("login","GET","UserController","Login");
     $r->addRoute("verify","POST","UserController","VerifyUser");
     $r->addRoute("logout","GET","UserController","Logout");
-    $r->addRoute("edit", "GET", "FriendsController", "LoadEdit");
-    $r->addRoute("edit", "POST", "FriendsController", "EditChapter");
+    $r->addRoute("edit/:ID", "POST", "ChapterController", "EditChapter");
+    $r->addRoute('delete chapter/:ID','GET',"ChapterController","DeleteChapter");
+    $r->addRoute('edit modo/:ID',"GET", "ChapterController", "LoadEdit");
     //Ruta por defecto.
-    $r->setDefaultRoute("FriendsController", "Home");
+    $r->setDefaultRoute("ChapterController", "Home");
 
 
     //run

@@ -30,8 +30,22 @@ class ChapterModel
         $sentencia->execute(array($title,$chapter_number,$director,$writer,$description,$date,$id_season));
     
     }
-    function UpdateChapter($title,$director,$writer,$description,$date,$season,$chapter_number) {
-        $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=? where id_season=? and chapter_number=?');
-        $sentencia->execute(array($title,$director,$writer,$description,$date,$season,$chapter_number));
+    
+    function UpdateChapter($title,$director,$writer,$description,$date,$chapter_number,$id) 
+    {
+        $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,chapter_number=? WHERE id=?');
+        $sentencia->execute(array($title,$director,$writer,$description,$date,$chapter_number,$id));
+    }
+
+    function DeleteChapter($id)
+    {
+        $sentencia = $this->db->prepare("DELETE FROM chapter WHERE id=?");
+        $sentencia->execute(array($id));
+    }
+    function GetChapter($id)
+    {
+        $sentencia =$this->db->prepare("SELECT * FROM chapter WHERE id=?");
+        $sentencia->execute(array($id));
+        return $sentencia->fetch(PDO::FETCH_OBJ);
     }
 }
