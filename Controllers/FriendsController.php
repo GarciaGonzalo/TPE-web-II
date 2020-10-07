@@ -61,8 +61,14 @@ class FriendsController
     function LoadEdit()
     {
         $logged = $this->user_controller->CheckLoggedIn();
-        $seasons = $this->season_controller->GetSeasons();
-        $this->view->RenderEdit($seasons,$logged);
+        if($logged)
+        {
+            $seasons = $this->season_controller->GetSeasons();
+            $this->view->RenderEdit($seasons,$logged);
+        }else
+        {
+            $this->view->RenderError('no estas loggeado','logueate e intenta de nuevo');
+        }
     }
     function CheckIfExists_chapter_number($new_chapter_number)
     {

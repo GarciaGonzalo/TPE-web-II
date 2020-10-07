@@ -27,7 +27,7 @@
     </div>
     <div class="form-group col-md-4">
         <label for="formGroupExampleInput">Fecha a editar</label>
-        <input required name="emision_date_edit" type="text" class="form-control" id="formGroupExampleInput" Placeholder="Fecha de emision">
+        <input required name="emision_date_edit" type="date" class="form-control" id="formGroupExampleInput" Placeholder="Fecha de emision">
     <small class="form-text text-muted">
     Formato de fecha aaaa/mm/dd
 </small>
