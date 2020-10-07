@@ -43,6 +43,7 @@ class UserController
                 if (password_verify($password, $hash->password)) {
                     session_start();
                     $_SESSION['user'] = $email;
+                    $_SESSION['LAST_ACTIVITY'] = time();
                     header("location:".BASE_URL);
                 } else {
                     $this->view->RenderError('La contraseña que introdujiste no coincide con el mail','si ya estas registrado intenta de nuevo checkeando tu ortografia');
@@ -57,4 +58,11 @@ class UserController
             //echo ('');
         }
     }
-}
+    function Logout(){
+            session_start();
+            session_destroy();
+            header('Location: '.BASE_URL);
+            die();
+        }
+    }
+

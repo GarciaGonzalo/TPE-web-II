@@ -15,6 +15,9 @@
     $r->addRoute("New","POST","FriendsController","InputChapter");
     $r->addRoute("login","GET","UserController","Login");
     $r->addRoute("verify","POST","UserController","VerifyUser");
+    $r->addRoute("logout","GET","UserController","Logout");
+    $r->addRoute("edit", "GET", "FriendsController", "LoadEdit");
+    $r->addRoute("edit", "POST", "FriendsController", "EditChapter");
     //Ruta por defecto.
     $r->setDefaultRoute("FriendsController", "Home");
 

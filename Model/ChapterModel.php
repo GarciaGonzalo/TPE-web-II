@@ -17,7 +17,7 @@ class ChapterModel
             $sentencia = $this->db->prepare("SELECT * FROM chapter ORDER BY emision_date ASC");
             $sentencia->execute();
         }
-       return $sentencia->fetchAll(PDO::FETCH_OBJ);
+    return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
     function InsertChapter($title,$chapter_number,$director,$writer,$description,$date,$season)
@@ -28,6 +28,10 @@ class ChapterModel
         $id_season = $resultado[0]->id;
         $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,id_season) VALUES(?,?,?,?,?,?,?)");
         $sentencia->execute(array($title,$chapter_number,$director,$writer,$description,$date,$id_season));
-       
+    
+    }
+    function UpdateChapter($title,$director,$writer,$description,$date,$season,$chapter_number) {
+        $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=? where id_season=? and chapter_number=?');
+        $sentencia->execute(array($title,$director,$writer,$description,$date,$season,$chapter_number));
     }
 }

@@ -58,4 +58,32 @@ class FriendsController
             }
         }
     }
+    function LoadEdit()
+    {
+        $logged = $this->user_controller->CheckLoggedIn();
+        $seasons = $this->season_controller->GetSeasons();
+        $this->view->RenderEdit($seasons,$logged);
+    }
+    function CheckIfExists_chapter_number($new_chapter_number)
+    {
+        $chapters = $this->chapter_model->GetChapters("all");
+        foreach ($chapters as $chapter) {
+            $chapter_number = $chapter->chapter_number;
+            if ($chapter_number == $new_chapter_number) {
+                return true;
+            }
+        }
+    }
+    function EditChapter()
+    {
+        if (isset($_POST['title_edit']) && isset($_POST['chapter_number_edit']) && isset($_POST['director_edit']) && isset($_POST['writer_edit']) && isset($_POST['description_edit']) && isset($_POST['emision_date_edit'])&& isset($_POST['season_id_edit'])) {
+            $existence = $this->CheckIfExists_chapter_number($_POST['chapter_number_edit']);
+            if (isset($existence)) {
+                $this->chapter_model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['season_id_edit'], $_POST['chapter_number_edit']);
+                $this->LoadEdit();
+            } else {
+                $this->view->RenderError('El Numero del capitulo que intentas editar no existe','Revisa que capitulos estan cargados antes de editar');
+            }
+        }
+    }
 }

@@ -42,4 +42,10 @@ class FriendsView
 
         $this->smarty->display('templates/error.tpl');
     }
+    function RenderEdit($seasons,$logged)
+    {
+        $this->smarty->assign('seasons',$seasons);
+        $this->smarty->assign('logged',$logged);
+        $this->smarty->display('templates/edit.tpl');
+    }
 }

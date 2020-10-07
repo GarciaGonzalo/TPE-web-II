@@ -27,10 +27,10 @@
             </li>
             {if $logged eq true}
                 <li class="nav-item ml-4 ">
-                    <a class="nav-link" href=" ">Editar datos</a>
+                    <a class="nav-link" href="edit">Editar datos</a>
                 </li>
                 <li class="nav-item ml-4">
-                    <a class="nav-link" href=" ">Logout</a>
+                    <a class="nav-link" href="logout">Logout</a>
                 </li>
             {else}
                 <li class="nav-item ml-4">
