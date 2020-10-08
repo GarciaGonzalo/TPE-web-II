@@ -18,7 +18,10 @@ class UserController
 
     function CheckLoggedIn()
     {
+        if(!isset($_SESSION))
+        {
         session_start();
+        }
         if (isset($_SESSION['user'])) {
             return true;
         } else {

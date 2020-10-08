@@ -94,9 +94,15 @@ class ChapterController
         }
     }
     function DeleteChapter($params= null){
+        $logged = $this->user_controller->CheckLoggedIn();
+        if ($logged) {
         $id_borrar = $params[':ID'];
 
         $this->model->DeleteChapter($id_borrar);
-        $this->Home();
+        $this->Home();}
+        else
+        {
+            $this->view->RenderError('no estas loggeado','logueate e intenta de nuevo');
+        }
     }
 }
