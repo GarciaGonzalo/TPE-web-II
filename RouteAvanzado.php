@@ -1,6 +1,7 @@
 <?php
     require_once 'Controllers/ChapterController.php';
     require_once 'Controllers/UserController.php';
+    require_once 'Controllers/SeasonController.php';
     require_once 'RouterClass.php';
     
     // CONSTANTES PARA RUTEO
@@ -19,6 +20,10 @@
     $r->addRoute("edit/:ID", "POST", "ChapterController", "EditChapter");
     $r->addRoute('delete chapter/:ID','GET',"ChapterController","DeleteChapter");
     $r->addRoute('edit modo/:ID',"GET", "ChapterController", "LoadEdit");
+    $r->addRoute("upload modo","GET","ChapterController","UploadModo");
+    $r->addRoute("upload chapter","POST","ChapterController","InsertChapter");
+    $r->addRoute("seasons","GET","SeasonController","LoadSeasons");
+    $r->addRoute("edit season modo/:ID","GET","SeasonController","LoadEdit");
     //Ruta por defecto.
     $r->setDefaultRoute("ChapterController", "Home");
 

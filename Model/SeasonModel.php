@@ -9,7 +9,7 @@ class SeasonModel{
     function GetSeasons($season = null)
     {
         if ($season !== null) {
-            $sentencia = $this->db->prepare("SELECT * FROM season WHERE season.season = ?");
+            $sentencia = $this->db->prepare("SELECT * FROM season WHERE id = ?");
             $sentencia->execute(array($season));
         }
         else {
@@ -23,4 +23,5 @@ class SeasonModel{
         $sentencia->execute(array($season_number));
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }
+    
 }

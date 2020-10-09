@@ -13,7 +13,6 @@ class UserController
     {
         $this->model = new UserModel();
         $this->view = new FriendsView();
-        $this->season_controller = new SeasonController();
     }
 
     function CheckLoggedIn()
@@ -31,6 +30,7 @@ class UserController
 
     function Login()
     {
+        $this->season_controller = new SeasonController();
         $seasons = $this->season_controller->GetSeasons();
         $logged = $this->CheckLoggedIn();
         $this->view->RenderLogin($seasons, $logged);

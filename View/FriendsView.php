@@ -50,4 +50,24 @@ class FriendsView
 
         $this->smarty->display('templates/edit.tpl');
     }
+    function RenderUploadModo($seasons,$logged){
+        $this->smarty->assign('seasons',$seasons);
+        $this->smarty->assign('logged',$logged);
+
+        $this->smarty->display('templates/uploadform.tpl');
+    }
+    function RenderSeasons($seasons,$logged){
+        $this->smarty->assign('seasons',$seasons);
+        $this->smarty->assign('logged',$logged);
+
+        $this->smarty->display('templates/seasons_list.tpl');
+    }
+    function RenderSeasonEdit($seasons, $logged,$season_to_edit )
+    {
+        $this->smarty->assign('seasons',$seasons);
+        $this->smarty->assign('logged',$logged);
+        $this->smarty->assign('season_edit',$season_to_edit[0]);
+
+        $this->smarty->display('templates/edit_season_form.tpl');
+    }
 }

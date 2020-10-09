@@ -20,12 +20,8 @@ class ChapterModel
     return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function InsertChapter($title,$chapter_number,$director,$writer,$description,$date,$season)
+    function InsertChapter($title,$chapter_number,$director,$writer,$description,$date,$id_season)
     {
-        $sentencia = $this->db->prepare("SELECT id FROM season WHERE season = ?");
-        $sentencia->execute([$season]);
-        $resultado = $sentencia->fetchAll(pdo::FETCH_OBJ);
-        $id_season = $resultado[0]->id;
         $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,id_season) VALUES(?,?,?,?,?,?,?)");
         $sentencia->execute(array($title,$chapter_number,$director,$writer,$description,$date,$id_season));
     

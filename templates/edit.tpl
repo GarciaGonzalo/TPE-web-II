@@ -2,7 +2,7 @@
 
 {include file="navbar.tpl" logged=$logged seasons=$seasons}
 <div class="container">
-    <h2>Editar<h2>
+    <h2>Editar {$chapter->title}<h2>
 
             <form action="edit/{$chapter->id}" method="POST">
                 <div class="form-row">
