@@ -17,13 +17,18 @@
     $r->addRoute("login","GET","UserController","Login");
     $r->addRoute("verify","POST","UserController","VerifyUser");
     $r->addRoute("logout","GET","UserController","Logout");
+    $r->addRoute("detalle/:ID", "GET", "ChapterController", "LoadDetails");
     $r->addRoute("edit/:ID", "POST", "ChapterController", "EditChapter");
     $r->addRoute('delete chapter/:ID','GET',"ChapterController","DeleteChapter");
     $r->addRoute('edit modo/:ID',"GET", "ChapterController", "LoadEdit");
     $r->addRoute("upload modo","GET","ChapterController","UploadModo");
     $r->addRoute("upload chapter","POST","ChapterController","InsertChapter");
     $r->addRoute("seasons","GET","SeasonController","LoadSeasons");
-    $r->addRoute("edit season modo/:ID","GET","SeasonController","LoadEdit");
+    $r->addRoute("edit_season_modo/:ID","GET","SeasonController","LoadEdit");
+    $r->addRoute("edit_season/:ID","POST","SeasonController","EditSeason");
+    $r->addRoute("delete season/:ID","POST","SeasonController","DeleteSeason");
+    $r->addRoute("upload season modo","GET","SeasonController","UploadSeason");
+    $r->addRoute("upload_season","POST","SeasonController","InsertSeason");
     //Ruta por defecto.
     $r->setDefaultRoute("ChapterController", "Home");
 

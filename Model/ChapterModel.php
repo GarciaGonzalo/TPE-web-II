@@ -38,6 +38,11 @@ class ChapterModel
         $sentencia = $this->db->prepare("DELETE FROM chapter WHERE id=?");
         $sentencia->execute(array($id));
     }
+    function DeleteAllChapters($id)
+    {
+        $sentencia = $this->db->prepare("DELETE FROM chapter WHERE id_season=?");
+        $sentencia->execute(array($id));  
+    }
     function GetChapter($id)
     {
         $sentencia =$this->db->prepare("SELECT * FROM chapter WHERE id=?");

@@ -38,7 +38,14 @@ class ChapterController
         $logged = $this->user_controller->CheckLoggedIn();
         $this->view->RenderList($chapters, $season, $seasons, $logged);
     }
-
+    Function LoadDetails($params = null)
+    {
+        $logged = $this->user_controller->CheckLoggedIn();
+        $id_details = $params[':ID'];
+        $seasons = $this->season_controller->GetSeasons();
+        $chapter_details = $this->model->GetChapter($id_details);
+        $this->view->RenderDetails($seasons , $logged, $chapter_details);
+    }
     function CheckIfExists($new_title)
     {
         $chapters = $this->model->GetChapters("all");
@@ -61,6 +68,7 @@ class ChapterController
             }
         }
     }
+    
     function LoadEdit($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
@@ -70,9 +78,8 @@ class ChapterController
             $chapter_to_edit = $this->model->GetChapter($id_edit);
 
             $this->view->RenderEdit($seasons, $logged, $chapter_to_edit);
-        } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
+
     }
 
     function EditChapter($params = null)
@@ -100,6 +107,7 @@ class ChapterController
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
     }
+    
     function UploadModo()
     {
         $logged = $this->user_controller->CheckLoggedIn();

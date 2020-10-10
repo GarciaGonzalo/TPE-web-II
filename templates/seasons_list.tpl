@@ -19,8 +19,8 @@
                   
                     <td class="align-middle"><a href="season/{$season->season}"><button id="ver_detalle" type="button" class="btn btn-secondary">Ver capitulos</button></a>
 
-                            <a href="edit season modo/{$season->id}"><button id="" type="button" class="btn btn-warning">Editar</button></a>
-                            <a href="delete season/{$season->id}"><button id="" type="button" class="btn btn-danger">Borrar</button></a>
+                            <a href="edit_season_modo/{$season->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Editar</button></a>
+                            <a href="delete season/{$season->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Borrar</button></a>
 
                     </td>
                 </tr>

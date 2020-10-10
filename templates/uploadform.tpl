@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Cargar Nuevo<h2>
 
-            <form action="upload chapter " method="POST">
+            <form action="upload chapter" method="POST">
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
