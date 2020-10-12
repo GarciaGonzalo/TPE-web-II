@@ -6,3 +6,11 @@ body{
     height:100% !important;
     padding: 20px !important;
 }
+
+.left-white-margin{
+    border-left: 2px solid grey !important;
+}
+
+.my-card{
+    background-color: rgb(155, 46, 55) !important;
+}

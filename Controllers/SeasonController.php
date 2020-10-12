@@ -17,9 +17,9 @@ class SeasonController
         $this->user_controller = new UserController();
     }
 
-    function GetSeasons()
+    function GetSeasons($id = null)
     {
-        return $this->model->GetSeasons();
+        return $this->model->GetSeasons($id);
     }
     function GetSeasonId($season){
         return $this->model->GetSeasonId($season);
