@@ -76,10 +76,11 @@ class FriendsView
 
         $this->smarty->display('templates/upload_season_form.tpl');
     }
-    function RenderDetails($seasons , $logged, $chapter){
+    function RenderDetails($seasons , $logged, $chapter,$season_number){
         $this->smarty->assign('seasons',$seasons);
         $this->smarty->assign('logged',$logged);
         $this->smarty->assign('chapter',$chapter);
+        $this->smarty->assign('season_number',$season_number);
 
         $this->smarty->display('templates/chapter_details.tpl');
     }

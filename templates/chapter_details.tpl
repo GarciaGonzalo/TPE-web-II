@@ -1,30 +1,24 @@
 {include file="head.tpl"}
-    {include file="navbar.tpl" logged=$logged seasons=$seasons}
-    <div class="container text-center">
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Director</th>
-                    <th scope="col">Chapter Number</th>
-                    <th scope="col">Writer</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Emision date</th>
-                    <th scope="col">Season Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="align-middle">{$chapter->title}</td>
-                    <td class="align-middle">{$chapter->director}</td>
-                    <td class="align-middle">{$chapter->chapter_number}</td>
-                    <td class="align-middle">{$chapter->writer}</td>
-                    <td class="align-middle">{$chapter->description}</td>
-                    <td class="align-middle">{$chapter->emision_date}</td>
-                    <td class="align-middle">{$chapter->id_season}</td>
-
-                </tr>
-            </tbody>
-        </table>
+{include file="navbar.tpl" logged=$logged seasons=$seasons}
+<div class="container text-center">
+    <div class="card bg-dark text-white mx-auto" style="width: 18rem;">
+        <img class="card-img-top" src="images/thumbnail 1.png" alt="chapter {$chapter->title} thumbnail">
+        <div class="card-body">
+            <h5 class="card-title">{$chapter->title}</h5>
+            <p class="card-text">{$chapter->title} is the chapter number {$chapter->chapter_number} of season {$season_number}.</p>
+            <p class="card-text">in this episode {$chapter->description}</p>
+        </div>
+        <ul class="list-group list-group-flush ">
+            <li class="bg-secondary list-group-item">Written by: {$chapter->writer}</li>
+            <li class="bg-secondary list-group-item">Directed by: {$chapter->director}</li>
+            <li class="bg-secondary list-group-item">First emision: {$chapter->emision_date}</li>
+        </ul>
+        {if $logged == true}
+            <div class="card-body justify-content-around row">
+                <div class="col"><a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Edit </button></a></div>
+                <div class="col"><a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Delete</button></a></div>
+            </div>
+        {/if}
     </div>
-    {include file="scripts.tpl"}
+</div>
+{include file="scripts.tpl"}

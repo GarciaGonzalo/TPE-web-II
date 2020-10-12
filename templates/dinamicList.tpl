@@ -21,10 +21,11 @@
                     <!----$chapter->thumbnail_path ---->
                     <td class="d-flex flex-column"><img src="images/thumbnail 1.png" alt="thumbnail {$chapter->title}" class="img-thumbnail">
                         <span>{$chapter->emision_date}</span></td>
-                    <td class="align-middle"><a href="detalle/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-secondary">Ver detalle</button></a>
+                    <td class="align-middle">
+                   <div class="text-center"> <a href="detalle/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-secondary">Details</button></a></div>
                         {if $logged == true}
-                            <a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Editar</button></a>
-                            <a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Borrar</button></a>
+                            <div class="btn-group"> <a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Edit</button></a>
+                            <a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Delete</button></a></div>
                         {/if}
                     </td>
                 </tr>

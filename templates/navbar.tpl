@@ -30,7 +30,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
                     </a>
-                    <div class=" position-absolute dropdown-menu bg-danger" aria-labelledby="navbarDropdown">
+                    <div class=" position-absolute dropdown-menu bg-danger active" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="upload modo">Agregar capitulo</a>
                         <a class="dropdown-item" href="upload season modo">Agregar season</a>
                         <a class="dropdown-item" href="seasons">Editar seasons</a>

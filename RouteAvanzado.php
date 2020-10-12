@@ -26,7 +26,7 @@
     $r->addRoute("seasons","GET","SeasonController","LoadSeasons");
     $r->addRoute("edit_season_modo/:ID","GET","SeasonController","LoadEdit");
     $r->addRoute("edit_season/:ID","POST","SeasonController","EditSeason");
-    $r->addRoute("delete season/:ID","POST","SeasonController","DeleteSeason");
+    $r->addRoute("delete season/:ID","GET","SeasonController","DeleteSeason");
     $r->addRoute("upload season modo","GET","SeasonController","UploadSeason");
     $r->addRoute("upload_season","POST","SeasonController","InsertSeason");
     //Ruta por defecto.
