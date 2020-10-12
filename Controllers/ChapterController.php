@@ -33,7 +33,7 @@ class ChapterController
             $id_season = $this->season_controller->GetSeasonId($season);
             $chapters = $this->model->GetChapters($id_season->id);
         } else {
-            $chapters = $this->model->GetChapters('all');
+            $chapters = $this->model->GetChapters($season);
         }
         $logged = $this->user_controller->CheckLoggedIn();
         $this->view->RenderList($chapters, $season, $seasons, $logged);

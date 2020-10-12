@@ -14,7 +14,7 @@ class ChapterModel
             $sentencia->execute(array($season));
         }
         else {
-            $sentencia = $this->db->prepare("SELECT * FROM chapter ORDER BY emision_date ASC");
+            $sentencia = $this->db->prepare("SELECT * FROM chapter INNER JOIN season ON chapter.id_season = season.id ORDER BY emision_date ASC");
             $sentencia->execute();
         }
     return $sentencia->fetchAll(PDO::FETCH_OBJ);
