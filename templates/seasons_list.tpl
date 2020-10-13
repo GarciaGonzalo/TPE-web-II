@@ -7,8 +7,7 @@
         <thead>
             <tr>
                 <th scope="col">Number</th>
-                <th scope="col">Chapter Count</th>
-             
+                <th scope="col">Chapter Count</th>     
             </tr>
         </thead>
         <tbody>
@@ -16,9 +15,8 @@
                 <tr>
                     <td class="align-middle">{$season->season}</td>
                     <td class="align-middle">{$season->chapter_count}</td>
-                  
-                    <td class="align-middle"><a href="season/{$season->season}"><button id="ver_detalle" type="button" class="btn btn-secondary">Ver capitulos</button></a>
-
+                    <td class="align-middle">
+                            <a href="season/{$season->season}"><button id="ver_detalle" type="button" class="btn btn-secondary">Ver capitulos</button></a>
                             <a href="edit_season_modo/{$season->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Editar</button></a>
                             <a href="delete season/{$season->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Borrar</button></a>
 

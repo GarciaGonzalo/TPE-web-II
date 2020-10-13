@@ -11,7 +11,6 @@
 
     // rutas
     $r->addRoute("home", "GET", "ChapterController", "Home");
-    $r->addRoute("mermelada", "GET", "ChapterController", "Home");
     $r->addRoute("season/:SeasonNumber","GET","ChapterController","LoadSeason");
     $r->addRoute("New","POST","ChapterController","InputChapter");
     $r->addRoute("login","GET","UserController","Login");

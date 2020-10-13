@@ -16,14 +16,8 @@
 
                 </div>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
                 <a class="nav-link" href="season/all">Todos Los capitulos</a>
-            </li>
-            <li class="nav-item  mx-4">
-                <a class="nav-link" href="#">Some other</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link" href="#">Other some other</a>
             </li>
             {if $logged eq true}
                 <li class=" position-relative ml-4 nav-item dropdown drop-down-seasons ">
