@@ -10,7 +10,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Direction</th>
                 <th scope="col">Writer</th>
-                {if isset($chapters[0]->season)}
+                {if isset($chapters[0]->season_number)}
                     <th scope="col">season</th>
                 {/if}
             </tr>
@@ -21,8 +21,8 @@
                     <td class="align-middle">{$chapter->title}</td>
                     <td class="align-middle">{$chapter->director}</td>
                     <td class="align-middle">{$chapter->writer}</td>
-                    {if isset($chapters[0]->season)}
-                        <td class="align-middle">{$chapter->season}</th>
+                    {if isset($chapters[0]->season_number)}
+                        <td class="align-middle">{$chapter->season_number}</th>
                     {/if}
                     <!----$chapter->thumbnail_path ---->
                     <td class="d-flex flex-column"><img src="images/thumbnail 1.png" alt="thumbnail {$chapter->title}" class="img-thumbnail">

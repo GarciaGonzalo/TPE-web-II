@@ -35,6 +35,7 @@ class ChapterController
         } else {
             $chapters = $this->model->GetChapters($season);
         }
+
         $logged = $this->user_controller->CheckLoggedIn();
         $this->view->RenderList($chapters, $season, $seasons, $logged);
     }
@@ -60,18 +61,6 @@ class ChapterController
         }
     }
 
-    function InputChapter()
-    {
-        if (isset($_POST['title_input']) && isset($_POST['director_input']) && isset($_POST['writer_input']) && isset($_POST['description_input']) && isset($_POST['emision_date_input']) && isset($_POST['season_input'])) {
-            $existence = $this->CheckIfExists($_POST['title_input']);
-            if (!isset($existence)) {
-                $this->model->InsertChapter($_POST['title_input'], $_POST['chapter_count_input'], $_POST['director_input'], $_POST['writer_input'], $_POST['description_input'], $_POST['emision_date_input'], $_POST['season_input']);
-            } else {
-                $this->view->RenderError('El capitulo que intentas ingresar ya existia', 'Revisa que capitulos estan cargados antes de cargar uno nuevo');
-            }
-        }
-    }
-
     function LoadEdit($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
@@ -81,6 +70,8 @@ class ChapterController
             $chapter_to_edit = $this->model->GetChapter($id_edit);
 
             $this->view->RenderEdit($seasons, $logged, $chapter_to_edit);
+        }else {
+            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
     }
 
@@ -91,9 +82,14 @@ class ChapterController
             if ($logged) {
                 $id_toedit = $params[':ID'];
                 $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id_toedit);
-                $this->Home();
+                $seasons = $this->season_controller->GetSeasons();
+                $chapter = $this->model->GetChapter($id_toedit);
+                $season_model = new SeasonModel();
+                $season = $season_model->GetSeasons($chapter->id_season);
+                $season_number = $season[0]->season;
+                $this->view->RenderDetails($seasons, $logged, $chapter, $season_number);
             } else {
-                $this->view->RenderError('El Numero del capitulo que intentas editar no existe', 'Revisa que capitulos estan cargados antes de editar');
+                $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
             }
         }
     }
@@ -102,9 +98,10 @@ class ChapterController
         $logged = $this->user_controller->CheckLoggedIn();
         if ($logged) {
             $id_borrar = $params[':ID'];
-
-            $this->model->DeleteChapter($id_borrar);
-            header('location:' . BASE_URL . 'season/all');
+            $id_season = $this->model->DeleteChapter($id_borrar);
+            $season_model = new SeasonModel();
+            $season = $season_model->GetSeasons($id_season->id_season);
+            header('location:'. BASE_URL . 'season/'.$season[0]->season);
         } else {
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
@@ -125,15 +122,16 @@ class ChapterController
         $logged = $this->user_controller->CheckLoggedIn();
         if ($logged) {
             if (isset($_POST['title_input']) && isset($_POST['chapter_number_input']) && isset($_POST['director_input']) && isset($_POST['writer_input']) && isset($_POST['description_input']) && isset($_POST['emision_date_input']) && isset($_POST['season_input'])) {
-                if ($this->CheckIfExists($_POST['title_input'])) {
+                if (!$this->CheckIfExists($_POST['title_input'])) {
                     $season_number = $_POST['season_input'];
                     $season_id = $this->season_controller->GetSeasonId($season_number);
                     $this->model->InsertChapter($_POST['title_input'], $_POST['chapter_number_input'], $_POST['director_input'], $_POST['writer_input'], $_POST['description_input'], $_POST['emision_date_input'], $season_id->id);
                     header('location:season/' . $season_number);
+                } else {
+                    $this->view->RenderError('parece que el capitulo que intentas cargar ya estaba cargado', 'ingresa otro capitulo');
                 }
-                else {
-                    $this->view->RenderError('parece que el capitulo que intentas cargar ya estaba cargado','ingresa otro capitulo');
-                }
+            } else {
+                $this->view->RenderError('parece que no completaste todos los campos', 'por favor completalos e intenta de nuevo');
             }
         } else {
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');

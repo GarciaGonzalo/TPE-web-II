@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-10-2020 a las 21:27:36
+-- Tiempo de generación: 06-11-2020 a las 20:42:34
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -51,7 +51,6 @@ INSERT INTO `chapter` (`id`, `title`, `chapter_number`, `director`, `writer`, `d
 (7, 'The One With George Stephanopoulos', 4, 'James Burrows', 'Alexa Junge', 'The girls spy on the sexy politician across the street, while the guys go to a hockey game.', '1994-10-13', 1),
 (8, 'The One With The East German Laundry Detergent', 5, 'Pamela Fryman', 'Jeff Greenstein & Jeff Strauss', 'Ross and Rachel wash their laundry together. Joey takes Monica on a fake double date in an attempt to reunite with his ex', '1994-10-20', 1),
 (9, 'The One With The Butt', 6, 'Arlene Sanford', 'Adam Chase & Ira Ungerleider', 'Joey finally gets a film role: Al Pacino\'s butt double. Chandler dates a woman who already has both a husband and a boyfriend.', '1994-10-27', 1),
-(10, 'The One With The Blackout', 7, 'James Burrows', 'Jeff Astrof & Mike Sikowitz', 'During a power outage, Rachel falls for the owner of a lost kitten, a Italian guy, much to Ross\'s chagrin. Meanwhile, Chandler is trapped in an automated-teller vestibule with a gorgeous model.', '1994-11-03', 1),
 (11, 'The One Where Nana Dies Twice', 8, 'James Burrows', 'Marta Kauffman & David Crane', 'Ross and Monica go to the bedside of their dead grandmother, who momentarily returns to life. Chandler questions his sexual persona when a collegue wants to arrange a date for him with another guy.er family.', '1994-11-10', 1),
 (12, 'The One Where Underdog Gets Away', 9, 'James Burrows', 'Jeff Greenstein & Jeff Strauss', 'Monica plans a lovely, quiet Thanksgiving feast in her apartment but her plans go awry. Joey appears on medical posters. Rachel plans to go skiing with her family.', '1994-11-17', 1),
 (13, 'The One With The Monkey', 10, 'Peter Bonerz', 'Adam Chase & Ira Ungerleider', 'Ross arrives at the New Year\'s Eve party with his new companion, a monkey named Marcel, who is more compatible with the group than he is.', '1994-12-15', 1),
@@ -144,21 +143,22 @@ INSERT INTO `season` (`id`, `season`, `chapter_count`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Estructura de tabla para la tabla `user`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `password` varchar(500) NOT NULL
+  `password` varchar(500) NOT NULL,
+  `super_user` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Volcado de datos para la tabla `usuario`
+-- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `usuario` (`id`, `email`, `password`) VALUES
-(1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC');
+INSERT INTO `user` (`id`, `email`, `password`, `super_user`) VALUES
+(1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC', 1);
 
 --
 -- Índices para tablas volcadas
@@ -178,9 +178,9 @@ ALTER TABLE `season`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuario`
+-- Indices de la tabla `user`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -191,7 +191,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT de la tabla `season`
@@ -200,9 +200,9 @@ ALTER TABLE `season`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT de la tabla `user`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --

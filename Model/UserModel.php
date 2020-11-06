@@ -8,7 +8,7 @@ class UserModel
     }
     function GetHash($mail)
     {
-        $sentencia = $this->db->prepare("SELECT password FROM usuario WHERE email = ?");
+        $sentencia = $this->db->prepare("SELECT password FROM user WHERE email = ?");
         $sentencia->execute([$mail]);
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }
