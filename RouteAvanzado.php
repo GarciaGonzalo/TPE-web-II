@@ -28,6 +28,8 @@
     $r->addRoute("delete season/:ID","GET","SeasonController","DeleteSeason");
     $r->addRoute("upload season modo","GET","SeasonController","UploadSeason");
     $r->addRoute("upload_season","POST","SeasonController","InsertSeason");
+    $r->addRoute("register","GET","UserController","RegisterForm");
+    $r->addRoute("register","POST","UserController","Register");
     //Ruta por defecto.
     $r->setDefaultRoute("ChapterController", "Home");
 

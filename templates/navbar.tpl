@@ -35,7 +35,7 @@
                 </li>
             {else}
                 <li class="nav-item active ml-4">
-                    <a class="nav-link " href="login">Login</a>
+                    <a class="nav-link " href="login">Login or Register</a>
                 </li>
             {/if}
         </ul>

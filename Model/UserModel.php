@@ -12,4 +12,9 @@ class UserModel
         $sentencia->execute([$mail]);
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }
+    function InsertUser($mail,$hash)
+    {
+        $sentencia = $this->db->prepare("INSERT INTO user ( email, password, super_user) VALUES (?, ?, ?)");
+        return $sentencia->execute([$mail,$hash,0]);
+    }
 }

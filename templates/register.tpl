@@ -2,9 +2,9 @@
 
 {include file="navbar.tpl" logged=$logged seasons=$seasons}
 <div class="container">
-    <h2>Login<h2>
+    <h2>Register<h2>
 
-            <form action="verify" method="POST">
+            <form action="register" method="POST">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
                     <input name="email_input" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
@@ -16,7 +16,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <p>have no account yet? <a href="register">register</a></p>
 </div>
 
 {include file="scripts.tpl" }
