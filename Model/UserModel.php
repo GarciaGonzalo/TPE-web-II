@@ -17,4 +17,10 @@ class UserModel
         $sentencia = $this->db->prepare("INSERT INTO user ( email, password, super_user) VALUES (?, ?, ?)");
         return $sentencia->execute([$mail,$hash,0]);
     }
+    function getUser($mail)
+    {
+        $query = $this->db->prepare('SELECT * FROM user WHERE email = ?');
+        $query->execute([$mail]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
 }
