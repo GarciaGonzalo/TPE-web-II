@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2020 a las 20:42:34
+-- Tiempo de generación: 10-11-2020 a las 18:15:11
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -115,6 +115,28 @@ INSERT INTO `chapter` (`id`, `title`, `chapter_number`, `director`, `writer`, `d
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `content` varchar(560) NOT NULL,
+  `rating` int(1) NOT NULL,
+  `id_chapter` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `comment`
+--
+
+INSERT INTO `comment` (`id`, `content`, `rating`, `id_chapter`, `id_user`) VALUES
+(1, 'esto es un comentario lorem ipsum porros lorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porros', 1, 18, 3),
+(2, 'this yet another comment lorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porros', 3, 11, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `season`
 --
 
@@ -158,7 +180,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `super_user`) VALUES
-(1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC', 1);
+(1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC', 1),
+(3, 'mariano.arias12@gmail.com', '$2y$10$7REyQFCM/rCdXSM.mbwHve6E6IH8z9d0cH9Ph.MM3FoMnQFhgadcm', 0);
 
 --
 -- Índices para tablas volcadas
@@ -170,6 +193,14 @@ INSERT INTO `user` (`id`, `email`, `password`, `super_user`) VALUES
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`id`),
   ADD KEY `INDEX` (`id_season`);
+
+--
+-- Indices de la tabla `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_chapter` (`id_chapter`),
+  ADD KEY `id_user` (`id_user`);
 
 --
 -- Indices de la tabla `season`
@@ -194,6 +225,12 @@ ALTER TABLE `chapter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
+-- AUTO_INCREMENT de la tabla `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1132;
+
+--
 -- AUTO_INCREMENT de la tabla `season`
 --
 ALTER TABLE `season`
@@ -203,7 +240,7 @@ ALTER TABLE `season`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
@@ -214,6 +251,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `chapter`
   ADD CONSTRAINT `chapter_ibfk_1` FOREIGN KEY (`id_season`) REFERENCES `season` (`id`);
+
+--
+-- Filtros para la tabla `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`id_chapter`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
