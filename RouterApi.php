@@ -3,9 +3,9 @@
     require_once 'services/apis/CommnentsApi/CommentsApiController.php';
 
     $r = new Router();
-    $r->addRoute('comments/:ID','GET','CommentsApiController','GetComments');
+    $r->addRoute('comments/:ID','GET','CommentsApiController','getComments');
     $r->addRoute('comment/:ID','DELETE','CommentsApiController','DeleteComment');
-
+    $r->addRoute('comment','POST','CommentsApiController','insertComment');
 
 
     //run

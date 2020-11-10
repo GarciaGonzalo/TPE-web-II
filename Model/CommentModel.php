@@ -13,10 +13,17 @@ class CommentModel
         $query->execute([$chapter_id]);
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
+    
     function deleteComment($id)
     {
         $query = $this->db->prepare('DELETE FROM comment WHERE id =?');
         $query->execute([$id]);
         return $query->rowCount();
+    }
+
+    function insertcomment($comment)
+    {
+        $query = $this->db->prepare('INSERT INTO comment (content,rating,id_chapter,id_user) VALUES(?,?,?,?)');
+        return $query->execute([$comment->content,$comment->rating,$comment->id_chapter,$comment->id_user]);
     }
 }
