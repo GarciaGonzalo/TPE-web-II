@@ -22,7 +22,7 @@ class CommentsApiController extends apiController
             } else {
                 $this->view->response('The server can not find the requested page.', 404);
             }
-        }else{
+        } else {
             $this->view->response('The server did not understand the request.', 400);
         }
     }
@@ -55,7 +55,12 @@ class CommentsApiController extends apiController
         $user_controller = new UserController();
         if ($user_controller->CheckLoggedIn()) {
             $data = $this->getData();
-            if ($this->model->insertComment($data)) {
+            $content = $data->content;
+            $rating = $data->rating;
+            $id_chapter = $data->id_chapter;
+            $id_user = $_SESSION['user_id'];
+            $inserted = $this->model->insertComment($content,$rating,$id_chapter,$id_user);
+            if ($inserted) {
                 $this->view->response("The request is complete, and a new resource is created.", 201);
             } else {
                 $this->view->response("The server can not find the requested page.", 404);

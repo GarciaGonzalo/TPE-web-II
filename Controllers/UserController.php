@@ -40,11 +40,12 @@ class UserController
         if (isset($_POST['email_input']) && isset($_POST['pass_input']) && !empty($_POST['email_input']) && !empty($_POST['pass_input'])) {
             $email = $_POST['email_input'];
             $password = $_POST['pass_input'];
-            $hash = $this->model->GetHash($email);
-            if ($hash) {
-                if (password_verify($password, $hash->password)) {
+            $hashAndId = $this->model->getHashAndId($email);
+            if ($hashAndId) {
+                if (password_verify($password, $hashAndId->password)) {
                     session_start();
                     $_SESSION['user'] = $email;
+                    $_SESSION['user_id']=$hashAndId->id;
                     $_SESSION['LAST_ACTIVITY'] = time();
                     header("location:" . BASE_URL);
                 } else {
@@ -73,7 +74,8 @@ class UserController
 
             if (isset($_POST['email_input']) && isset($_POST['pass_input'])) 
             {
-                if (!$this->model->GetHash($_POST['email_input'])) 
+                $hashAndId= $this->model->getHashAndId($_POST['email_input']);
+                if (!$hashAndId) 
                 {
                     $hash = password_hash($_POST['pass_input'], PASSWORD_DEFAULT);
                     $response = $this->model->InsertUser($_POST['email_input'], $hash);
@@ -82,6 +84,7 @@ class UserController
                     {
                         session_start();
                         $_SESSION['user'] = $_POST['email_input'];
+                        $_SESSION['user_id']=$hashAndId->id;
                         $_SESSION['LAST_ACTIVITY'] = time();
 
                         header("location:" . BASE_URL);

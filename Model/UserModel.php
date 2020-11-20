@@ -6,9 +6,9 @@ class UserModel
     {
         $this->db =new PDO('mysql:host=localhost;'.'dbname=friends_db;charset=utf8', 'root', '');
     }
-    function GetHash($mail)
+    function getHashAndId($mail)
     {
-        $sentencia = $this->db->prepare("SELECT password FROM user WHERE email = ?");
+        $sentencia = $this->db->prepare("SELECT password, id FROM user WHERE email = ?");
         $sentencia->execute([$mail]);
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }

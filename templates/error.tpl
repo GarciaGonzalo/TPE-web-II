@@ -7,5 +7,5 @@
     <p class="mb-0">por favor {$error_solution}</p>
     <button id="back_button" type="button" class="btn btn-danger">Volver</button></a>
 </div>
-<script src="./scripts/button_handler.js"></script>
+
 {include file="scripts.tpl" }

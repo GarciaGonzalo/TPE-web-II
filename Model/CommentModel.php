@@ -9,7 +9,12 @@ class CommentModel
 
     function selectCommentsOfChapter($chapter_id)
     {
-        $query = $this->db->prepare('SELECT * FROM comment WHERE id_chapter=?');
+        $query = $this->db->prepare("SELECT 
+        comment.rating as 'rating',
+        comment.content as 'content',
+        comment.timestamp as 'timestamp',
+        user.email as 'user'
+        FROM comment INNER JOIN user on comment.id_user = user.id WHERE id_chapter=?");
         $query->execute([$chapter_id]);
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
@@ -21,9 +26,9 @@ class CommentModel
         return $query->rowCount();
     }
 
-    function insertcomment($comment)
+    function insertcomment($content,$rating,$id_chapter,$id_user)
     {
         $query = $this->db->prepare('INSERT INTO comment (content,rating,id_chapter,id_user) VALUES(?,?,?,?)');
-        return $query->execute([$comment->content,$comment->rating,$comment->id_chapter,$comment->id_user]);
+        return $query->execute([$content,$rating,$id_chapter,$id_user]);
     }
 }

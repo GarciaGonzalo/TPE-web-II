@@ -1,7 +1,7 @@
 {include file="head.tpl"}
 {include file="navbar.tpl" logged=$logged seasons=$seasons}
 <div class="container text-center">
-    <div class="card bg-dark text-white mx-auto" style="width: 18rem;">
+    <div class="card bg-dark text-white mx-auto" style="width: 30rem;">
         <img class="card-img-top" src="images/thumbnail 1.png" alt="chapter {$chapter->title} thumbnail">
         <div class="card-body">
             <h5 class="card-title">{$chapter->title}</h5>
@@ -19,6 +19,8 @@
                 <div class="col"><a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Delete</button></a></div>
             </div>
         {/if}
+        {include file="vue/commentSection.vue"}
     </div>
 </div>
 {include file="scripts.tpl"}
+<script src="js/comments.js"></script>
