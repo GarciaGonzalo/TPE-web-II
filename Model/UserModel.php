@@ -38,7 +38,7 @@ class UserModel
         $query->execute([$id]);
     }
     function UpdateUser($email_input,$super_user_input,$id_edit){
-        $query = $this->db->prepare('UPDATE user SET email =? , super_user =? WHERE id =? ');
+        $query = $this->db->prepare('UPDATE user SET email =? , super_user =? WHERE id =?');
         $query->execute(array($email_input,$super_user_input,$id_edit));
     }
 }

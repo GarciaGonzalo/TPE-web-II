@@ -10,6 +10,7 @@ class CommentModel
     function selectCommentsOfChapter($chapter_id)
     {
         $query = $this->db->prepare("SELECT 
+        comment.id as 'id',
         comment.rating as 'rating',
         comment.content as 'content',
         comment.timestamp as 'timestamp',

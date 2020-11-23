@@ -22,7 +22,7 @@
             
             {if $logged eq true && $admin eq true}
                 <li class=" position-relative ml-4 nav-item dropdown drop-down-seasons ">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="admin-deck" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Admin
                     </a>
                     <div class=" position-absolute dropdown-menu bg-danger active" aria-labelledby="navbarDropdown">
