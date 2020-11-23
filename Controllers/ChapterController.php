@@ -22,7 +22,8 @@ class ChapterController
     {
         $logged = $this->user_controller->CheckLoggedIn();
         $seasons = $this->season_controller->GetSeasons();
-        $this->view->RenderHome($seasons, $logged);
+        $admin = $this->user_controller->checkAdmin();
+        $this->view->RenderHome($seasons, $logged,$admin);
     }
 
     function LoadSeason($params = null)
@@ -37,18 +38,20 @@ class ChapterController
         }
 
         $logged = $this->user_controller->CheckLoggedIn();
-        $this->view->RenderList($chapters, $season, $seasons, $logged);
+        $admin = $this->user_controller->checkAdmin();
+        $this->view->RenderList($chapters, $season, $seasons, $logged,$admin);
     }
     function LoadDetails($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
+        $admin = $this->user_controller->checkAdmin();
         $id_details = $params[':ID'];
         $seasons = $this->season_controller->GetSeasons();
         $chapter_details = $this->model->GetChapter($id_details);
         $season = $this->season_controller->GetSeasons($chapter_details->id_season);
         $season_number = $season[0]->season;
 
-        $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number);
+        $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number,$admin);
     }
     function CheckIfExists($new_title)
     {
@@ -64,12 +67,13 @@ class ChapterController
     function LoadEdit($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
+        $admin = $this->user_controller->checkAdmin();
         if ($logged) {
             $id_edit = $params[':ID'];
             $seasons = $this->season_controller->GetSeasons();
             $chapter_to_edit = $this->model->GetChapter($id_edit);
 
-            $this->view->RenderEdit($seasons, $logged, $chapter_to_edit);
+            $this->view->RenderEdit($seasons, $logged, $chapter_to_edit,$admin);
         }else {
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
@@ -79,7 +83,8 @@ class ChapterController
     {
         if (isset($_POST['title_edit']) && isset($_POST['chapter_number_edit']) && isset($_POST['director_edit']) && isset($_POST['writer_edit']) && isset($_POST['description_edit']) && isset($_POST['emision_date_edit'])) {
             $logged = $this->user_controller->CheckLoggedIn();
-            if ($logged) {
+            $admin = $this->user_controller->checkAdmin();
+            if ($logged && $admin) {
                 $id_toedit = $params[':ID'];
                 $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id_toedit);
                 $seasons = $this->season_controller->GetSeasons();
@@ -87,7 +92,7 @@ class ChapterController
                 $season_model = new SeasonModel();
                 $season = $season_model->GetSeasons($chapter->id_season);
                 $season_number = $season[0]->season;
-                $this->view->RenderDetails($seasons, $logged, $chapter, $season_number);
+                $this->view->RenderDetails($seasons, $logged, $chapter, $season_number,$admin);
             } else {
                 $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
             }
@@ -96,7 +101,8 @@ class ChapterController
     function DeleteChapter($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
-        if ($logged) {
+        $admin = $this->user_controller->checkAdmin();
+        if ($logged && $admin) {
             $id_borrar = $params[':ID'];
             $id_season = $this->model->DeleteChapter($id_borrar);
             $season_model = new SeasonModel();
@@ -110,9 +116,10 @@ class ChapterController
     function UploadModo()
     {
         $logged = $this->user_controller->CheckLoggedIn();
-        if ($logged) {
+        $admin = $this->user_controller->checkAdmin();
+        if ($logged && $admin) {
             $seasons = $this->season_controller->GetSeasons();
-            $this->view->RenderUploadModo($seasons, $logged);
+            $this->view->RenderUploadModo($seasons, $logged,$admin);
         } else {
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
@@ -120,7 +127,8 @@ class ChapterController
     function InsertChapter()
     {
         $logged = $this->user_controller->CheckLoggedIn();
-        if ($logged) {
+        $admin = $this->user_controller->checkAdmin();
+        if ($logged && $admin) {
             if (isset($_POST['title_input']) && isset($_POST['chapter_number_input']) && isset($_POST['director_input']) && isset($_POST['writer_input']) && isset($_POST['description_input']) && isset($_POST['emision_date_input']) && isset($_POST['season_input'])) {
                 if (!$this->CheckIfExists($_POST['title_input'])) {
                     $season_number = $_POST['season_input'];

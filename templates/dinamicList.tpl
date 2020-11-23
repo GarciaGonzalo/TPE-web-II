@@ -3,7 +3,6 @@
 {include file="navbar.tpl" logged=$logged seasons=$seasons}
 
 <div class="container text-center">
-    <h1 class="text-white">F.R.I.E.N.D.S Season {$season}</h1>
     <table class="table table-dark">
         <thead>
             <tr>

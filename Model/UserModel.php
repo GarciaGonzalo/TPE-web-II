@@ -23,4 +23,22 @@ class UserModel
         $query->execute([$mail]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
+    function GetUserId($id){
+        $query = $this->db->prepare('SELECT * FROM user WHERE id = ?');
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+    function getAllUsers(){
+        $query = $this->db->prepare('SELECT * FROM user');
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+    function DeleteUser($id){
+        $query = $this->db->prepare('DELETE FROM user WHERE user.id = ?');
+        $query->execute([$id]);
+    }
+    function UpdateUser($email_input,$super_user_input,$id_edit){
+        $query = $this->db->prepare('UPDATE user SET email =? , super_user =? WHERE id =? ');
+        $query->execute(array($email_input,$super_user_input,$id_edit));
+    }
 }

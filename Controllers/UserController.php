@@ -8,11 +8,13 @@ class UserController
     private $model;
     private $view;
     private $season_controller;
+    private $season_model;
 
     function __construct()
     {
         $this->model = new UserModel();
         $this->view = new FriendsView();
+        $this->season_model = new SeasonModel();
     }
 
     function CheckLoggedIn()
@@ -26,13 +28,24 @@ class UserController
             return false;
         }
     }
-
+    
+    function checkAdmin(){
+        $user = $this->model->getUser($_SESSION['user']);
+        if ($user->super_user == 1){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
     function Login()
     {
         $this->season_controller = new SeasonController();
         $seasons = $this->season_controller->GetSeasons();
         $logged = $this->CheckLoggedIn();
-        $this->view->RenderLogin($seasons, $logged);
+        $admin = $this->user_controller->checkAdmin();
+        $this->view->RenderLogin($seasons, $logged,$admin);
     }
 
     function VerifyUser()
@@ -61,10 +74,10 @@ class UserController
 
     function RegisterForm()
     {
-        $season_model = new SeasonModel();
-        $seasons = $season_model->GetSeasons();
+        $seasons = $this->season_model->GetSeasons();
         $logged = $this->CheckLoggedIn();
-        $this->view->RenderResgisterForm($seasons, $logged);
+        $admin = $this->user_controller->checkAdmin();
+        $this->view->RenderResgisterForm($seasons, $logged,$admin);
     }
     function Register()
     {
@@ -105,7 +118,50 @@ class UserController
             $this->view->RenderError('ya habia un usuario logeado', 'no se preocupe ya cerramos la sesion por usted');
         }
     }
+    function LoadUserAdministration(){
+        $seasons = $this->season_model->GetSeasons();
+        $logged = $this->CheckLoggedIn();
+        $admin = $this->checkAdmin();
+        $user = $this->model->getAllUsers();
+        $this->view->RenderUserAdministration($seasons, $logged,$user,$admin);
+    }
+    function editUser($params = null){
+        if (isset($_POST['email_input']) && isset($_POST['super_user_input'])) {
+            $logged = $this->CheckLoggedIn();
+            $admin = $this->checkAdmin();
+            if ($logged && $admin) {
+                $id_edit = $params[':ID'];
+                $this->model->UpdateUser($_POST['email_input'],$_POST['super_user_input'],$id_edit);
+                //header('location:'.BASE_URL.'seasons');
+            } else {
+                $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+            }
+        }
+    }
+    function deleteUser($params = null){
+        $logged = $this->CheckLoggedIn();
+        $admin = $this->checkAdmin();
+        if ($logged && $admin) {
+            $id_borrar = $params[':ID'];
+            $this->model->DeleteUser($id_borrar);
+            //header('location:'.BASE_URL.'seasons');
+        } else {
+            $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+        }
+    }
+    function loadEdit($params = null){
+        $logged = $this->CheckLoggedIn();
+        $admin = $this->checkAdmin();
+        if ($logged && $admin) {
+            $id_edit = $params[':ID'];
+            $seasons = $this->season_model->GetSeasons();
+            $user_edit = $this->model->GetUserId($id_edit);
 
+            $this->view->RenderEditUser($seasons, $logged, $user_edit,$admin);
+        }else {
+            $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+        }
+    }
     function Logout()
     {
         session_start();

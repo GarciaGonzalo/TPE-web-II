@@ -12,7 +12,7 @@
     </ul>
 </div>
 <form id="commentForm">
-    <input type="text" name="comment" id="commentInput">
+    <input required type="text" name="comment" id="commentInput">
     <button type="submit">Comentar</button>
 </form>
 {/literal}
