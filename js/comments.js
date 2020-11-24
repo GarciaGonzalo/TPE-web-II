@@ -1,13 +1,6 @@
-document.addEventListener("DOMContentLoaded", fetchComments());
+document.addEventListener("DOMContentLoaded", fetchComments(buttonThing));
 document.getElementById("commentForm").addEventListener("submit", postComment);
-let deleteButtons = document.getElementsByClassName("deleteComment"); 
-    if (deleteButtons.length>0) {
-        deleteButtons.forEach(button => {
-            button.addEventListener("click",fetchDeleteComment);
-            console.log("llegaste, varias veces");
-            console.log(button.dataset.id);
-        });
-    }
+
 let app = new Vue(
     {
         el: '#commentSection',
@@ -16,6 +9,22 @@ let app = new Vue(
             test: "Vue works",
             comments: [],
             superUser: false,
+        },
+        methods: {
+            fetchDeleteComment: async function (commentId) {
+                const res = await fetch("api/comment/" + commentId, {
+                    method: "DELETE",
+                });
+                if (200 < res.status < 300) { fetchComments(); } else
+                    if (res.value = 401) {
+                        const baseUrl = "http://localhost/facu/web%20II/practicos/TPE-web-II"; //hay que dinamizar esto
+                        window.location.href = baseUrl + "/login";
+                    } else {
+                        alert("no tienes permisos para lo que intentas hacer")
+                    }
+
+
+            }
         }
     }
 );
@@ -38,7 +47,23 @@ function getChapterId() {
     return params[parseInt(params.length) - 1];
 }
 
+function buttonThing() {
+    let deleteButtons = document.getElementsByClassName("deleteComment");
+    if (deleteButtons.length > 0) {
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", fetchDeleteComment(this.dataset.id));
+            console.log("llegaste, varias veces");
+            console.log(button.dataset.id);
+        });
+    }
+}
 
+async function fetchComments() {
+    let chapterId = getChapterId();
+    const res = await fetch("api/comments/" + chapterId);
+    const comments = await res.json();
+    app.comments = comments;
+}
 async function fetchPostComment(content, rating, chapterId) {
     let commentData = {
         content: content,
@@ -60,16 +85,4 @@ async function fetchPostComment(content, rating, chapterId) {
             window.location.href = baseUrl + "/login";
         }
     }
-}
-
-async function fetchComments() {
-    let chapterId = getChapterId();
-    const res = await fetch("api/comments/" + chapterId);
-    const comments = await res.json();
-    app.comments = comments;
-}
-
-async function fetchDeleteComment() {
-    alert("llegaste");
-    //const res = await fetch("api/comment/".commentId);
 }

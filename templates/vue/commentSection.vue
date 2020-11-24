@@ -8,7 +8,9 @@
                 <div class="col-5">{{comment.timestamp}}</div>
             </div>
             <p> {{comment.content}}</p>
-            <template v-if="superUser"><button :data-id="comment.id" type="button" class="deleteComment btn btn-danger">Delete</button></template>
+            <template v-if="superUser">
+                <button v-on:click="fetchDeleteComment(comment.id)" type="button" class="deleteComment btn btn-danger">Delete</button>
+            </template>
         </li>
     </ul>
 </div>
