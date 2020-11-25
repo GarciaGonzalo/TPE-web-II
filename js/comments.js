@@ -15,7 +15,7 @@ let app = new Vue(
                 const res = await fetch("api/comment/" + commentId, {
                     method: "DELETE",
                 });
-                if (200 < res.status < 300) { fetchComments(); } else
+                if (200 < res.status && res.status < 300) { fetchComments; } else
                     if (res.value = 401) {
                         const baseUrl = "http://localhost/facu/web%20II/practicos/TPE-web-II"; //hay que dinamizar esto
                         window.location.href = baseUrl + "/login";

@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Cargar Nuevo<h2>
 
-            <form action="upload chapter" method="POST">
+            <form action="upload chapter" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
@@ -46,7 +46,12 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-row">
+                    <label for="image_input">
+                        <input type="file" name="image_input">
+                </div>
                 <button type="submit" class="btn btn-primary mb-2">Cargar</button>
+
 </div>
 
 </form>

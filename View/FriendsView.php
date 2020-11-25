@@ -21,7 +21,6 @@ class FriendsView
 
     function RenderList($chapters, $season, $all_seasons, $logged, $admin)
     {
-
         $this->smarty->assign('chapters', $chapters);
         $this->smarty->assign('season', $season);
         $this->smarty->assign('seasons', $all_seasons);
