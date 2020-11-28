@@ -4,7 +4,7 @@
 <div class="container">
     <h2>Edit {$chapter->title}<h2>
 
-            <form action="edit/{$chapter->id}" method="POST">
+            <form action="edit/{$chapter->id}" method="POST" enctype="multipart/form-data">
                 <div class="form-row">
 
                     <div class="form-group col-md-6">
@@ -36,6 +36,10 @@
                     <label for="formGroupExampleInput">Chapter Number (whitin it's season)</label>
                     <input required name="chapter_number_edit" type="number" class="form-control" id="formGroupExampleInput" value="{$chapter->chapter_number}">
 
+                </div>
+                <div class="form-row">
+                    <label for="image_input">
+                        <input type="file" name="image_input">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Edit</button>
 </div>

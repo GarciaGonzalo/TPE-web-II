@@ -17,6 +17,7 @@ class ApiView
             401 => "Unauthorized",
             404 => "Not Found",
             405 => "Method Not Allowed",
+            409 => "Conflict", 
             500 => "Internal Server Error"
         );
         return (isset($status[$code])) ? $status[$code] : $status[500];

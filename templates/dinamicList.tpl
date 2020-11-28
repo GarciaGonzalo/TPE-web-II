@@ -24,7 +24,7 @@
                         <td class="align-middle">{$chapter->season_number}</th>
                     {/if}
                     <!----$chapter->thumbnail_path ---->
-                    <td class="d-flex flex-column"><img src="{$chapter->thumbnail_path}" alt="thumbnail {$chapter->title}" class="img-thumbnail img-fluid" style="width: 60em;">
+                    <td class="d-flex flex-column"><img src="{$chapter->thumbnail_path}" alt="thumbnail {$chapter->title}" class="img-thumbnail img-fluid" style="width: 60em; height: 15em;">
                         <span>{$chapter->emision_date}</span></td>
                     <td class="align-middle">
                         <div class="text-center"> <a href="detalle/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-secondary">Details</button></a></div>

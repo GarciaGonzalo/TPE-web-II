@@ -14,3 +14,11 @@ body{
 .my-card{
     background-color: rgb(155, 46, 55) !important;
 }
+
+.textField{
+    width: 100% !important;
+    height: 7em !important;
+}
+.commentForm{
+    border-top: 2px solid !important;
+}

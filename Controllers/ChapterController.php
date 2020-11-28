@@ -81,12 +81,14 @@ class ChapterController
 
     function EditChapter($params = null)
     {
+        $thumbnail_path = $this->getThumbnailPath();
+
         if (isset($_POST['title_edit']) && isset($_POST['chapter_number_edit']) && isset($_POST['director_edit']) && isset($_POST['writer_edit']) && isset($_POST['description_edit']) && isset($_POST['emision_date_edit'])) {
             $logged = $this->user_controller->CheckLoggedIn();
             $admin = $this->user_controller->checkAdmin();
             if ($logged && $admin) {
                 $id_toedit = $params[':ID'];
-                $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id_toedit);
+                $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id_toedit, $thumbnail_path);
                 $seasons = $this->season_controller->GetSeasons();
                 $chapter = $this->model->GetChapter($id_toedit);
                 $season_model = new SeasonModel();
@@ -124,15 +126,20 @@ class ChapterController
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
     }
-    function InsertChapter()
+    function getThumbnailPath()
     {
         $thumbnail_path = null;
-        if (isset($_FILES['image_input'])&& !empty($_FILES['image_input']['name'])) {
+        if (isset($_FILES['image_input']) && !empty($_FILES['image_input']['name'])) {
             $img_dir = getcwd() . "/images";
             $file = tempnam($img_dir, $_FILES['image_input']['name']);
             move_uploaded_file($_FILES['image_input']['tmp_name'], $file);
             $thumbnail_path = "images/" . basename($file);
         }
+        return $thumbnail_path;
+    }
+    function InsertChapter()
+    {
+        $thumbnail_path = $this->getThumbnailPath();
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
         if ($logged && $admin) {

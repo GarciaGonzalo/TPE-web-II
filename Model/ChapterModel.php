@@ -32,20 +32,26 @@ class ChapterModel
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function InsertChapter($title, $chapter_number, $director, $writer, $description, $date, $id_season, $thumbnail_path = null)
-    {if ($thumbnail_path!== NULL) {
-        $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,thumbnail_path,id_season) VALUES(?,?,?,?,?,?,?,?)");
-        $sentencia->execute(array($title, $chapter_number, $director, $writer, $description, $date, $thumbnail_path, $id_season)); 
-    }else{
-        $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,id_season) VALUES(?,?,?,?,?,?,?)");
-        $sentencia->execute(array($title, $chapter_number, $director, $writer, $description, $date, $id_season));
-    }
+    function InsertChapter($title, $chapter_number, $director, $writer, $description, $date, $id_season, $thumbnail_path)
+    {
+        if ($thumbnail_path !== NULL) {
+            $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,thumbnail_path,id_season) VALUES(?,?,?,?,?,?,?,?)");
+            $sentencia->execute(array($title, $chapter_number, $director, $writer, $description, $date, $thumbnail_path, $id_season));
+        } else {
+            $sentencia = $this->db->prepare("INSERT INTO chapter(title,chapter_number,director,writer,description,emision_date,id_season) VALUES(?,?,?,?,?,?,?)");
+            $sentencia->execute(array($title, $chapter_number, $director, $writer, $description, $date, $id_season));
+        }
     }
 
-    function UpdateChapter($title, $director, $writer, $description, $date, $chapter_number, $id, $thumbnail_path = null)
+    function UpdateChapter($title, $director, $writer, $description, $date, $chapter_number, $id, $thumbnail_path)
     {
-        $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,thumbnail_path=?,chapter_number=? WHERE id=?');
-        $sentencia->execute(array($title, $director, $writer, $description, $date, $thumbnail_path, $chapter_number, $id));
+        if ($thumbnail_path !== NULL) {
+            $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,thumbnail_path=?,chapter_number=? WHERE id=?');
+            $sentencia->execute(array($title, $director, $writer, $description, $date, $thumbnail_path, $chapter_number, $id));
+        } else{
+            $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,chapter_number=? WHERE id=?');
+            $sentencia->execute(array($title, $director, $writer, $description, $date, $chapter_number, $id));
+        }
     }
 
     function DeleteChapter($id)
