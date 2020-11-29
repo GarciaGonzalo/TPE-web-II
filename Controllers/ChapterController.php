@@ -10,6 +10,7 @@ class ChapterController
     private $model;
     private $season_controller;
     private $user_controller;
+
     function __construct()
     {
         $this->view = new FriendsView();
@@ -41,18 +42,24 @@ class ChapterController
         $admin = $this->user_controller->checkAdmin();
         $this->view->RenderList($chapters, $season, $seasons, $logged, $admin);
     }
+
     function LoadDetails($params = null)
     {
-        $logged = $this->user_controller->CheckLoggedIn();
-        $admin = $this->user_controller->checkAdmin();
         $id_details = $params[':ID'];
-        $seasons = $this->season_controller->GetSeasons();
         $chapter_details = $this->model->GetChapter($id_details);
-        $season = $this->season_controller->GetSeasons($chapter_details->id_season);
-        $season_number = $season[0]->season;
+        if ($chapter_details) {
+            $logged = $this->user_controller->CheckLoggedIn();
+            $admin = $this->user_controller->checkAdmin();
+            $seasons = $this->season_controller->GetSeasons();
+            $season = $this->season_controller->GetSeasons($chapter_details->id_season);
+            $season_number = $season[0]->season;
 
-        $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number, $admin);
+            $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number, $admin);
+        } else {
+            $this->view->RenderError("we can't get your content", "check your link and your connection, then try again");
+        }
     }
+
     function CheckIfExists($new_title)
     {
         $chapters = $this->model->GetChapters("all");
@@ -69,49 +76,73 @@ class ChapterController
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
         if ($logged) {
-            $id_edit = $params[':ID'];
-            $seasons = $this->season_controller->GetSeasons();
-            $chapter_to_edit = $this->model->GetChapter($id_edit);
+            if ($admin) {
+                $id_edit = $params[':ID'];
+                $seasons = $this->season_controller->GetSeasons();
+                $chapter_to_edit = $this->model->GetChapter($id_edit);
 
-            $this->view->RenderEdit($seasons, $logged, $chapter_to_edit, $admin);
+                $this->view->RenderEdit($seasons, $logged, $chapter_to_edit, $admin);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
 
     function EditChapter($params = null)
     {
-        $thumbnail_path = $this->getThumbnailPath();
-
         if (isset($_POST['title_edit']) && isset($_POST['chapter_number_edit']) && isset($_POST['director_edit']) && isset($_POST['writer_edit']) && isset($_POST['description_edit']) && isset($_POST['emision_date_edit'])) {
             $logged = $this->user_controller->CheckLoggedIn();
             $admin = $this->user_controller->checkAdmin();
-            if ($logged && $admin) {
-                $id_toedit = $params[':ID'];
-                $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id_toedit, $thumbnail_path);
-                $seasons = $this->season_controller->GetSeasons();
-                $chapter = $this->model->GetChapter($id_toedit);
-                $season_model = new SeasonModel();
-                $season = $season_model->GetSeasons($chapter->id_season);
-                $season_number = $season[0]->season;
-                $this->view->RenderDetails($seasons, $logged, $chapter, $season_number, $admin);
+            if ($logged) {
+                if ($admin) {
+                    $id = $params[':ID'];
+                    $thumbnail_path = $this->getThumbnailPath();
+                    if (!empty($_FILES['image_input']['name'])) {
+                        $old_path = $this->model->getThumbnailPath($id);
+                        $this->deleteFile($old_path->thumbnail_path);
+                    }
+                    $this->model->UpdateChapter($_POST['title_edit'], $_POST['director_edit'], $_POST['writer_edit'], $_POST['description_edit'], $_POST['emision_date_edit'], $_POST['chapter_number_edit'], $id, $thumbnail_path);
+                    header('Location:' . BASE_URL . 'detalle/' . $id);
+                } else {
+                    $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+                }
             } else {
-                $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+                $this->view->RenderError("you're not logged in", 'log in and try again');
             }
+        } else {
+            $this->view->RenderError("you didn't complete all fields", "do so and try again");
         }
     }
+
+    function deleteFile($path)
+    {
+        if (file_exists($path)) {
+            return unlink($path);
+        } else {
+            return true;
+        }
+    }
+
     function DeleteChapter($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            $id_borrar = $params[':ID'];
-            $id_season = $this->model->DeleteChapter($id_borrar);
-            $season_model = new SeasonModel();
-            $season = $season_model->GetSeasons($id_season->id_season);
-            header('location:' . BASE_URL . 'season/' . $season[0]->season);
+        if ($logged) {
+            if ($admin) {
+                $id = $params[':ID'];
+                $old_path = $this->model->getThumbnailPath($id);
+                $this->deleteFile($old_path->thumbnail_path);
+                $id_season = $this->model->DeleteChapter($id);
+                $season_model = new SeasonModel();
+                $season = $season_model->GetSeasons($id_season->id_season);
+                header('location:' . BASE_URL . 'season/' . $season[0]->season);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
 
@@ -119,17 +150,22 @@ class ChapterController
     {
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            $seasons = $this->season_controller->GetSeasons();
-            $this->view->RenderUploadModo($seasons, $logged, $admin);
+        if ($logged) {
+            if ($admin) {
+                $seasons = $this->season_controller->GetSeasons();
+                $this->view->RenderUploadModo($seasons, $logged, $admin);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
+
     function getThumbnailPath()
     {
         $thumbnail_path = null;
-        if (isset($_FILES['image_input']) && !empty($_FILES['image_input']['name'])) {
+        if (isset($_FILES['image_input']) && !empty($_FILES['image_input']['name']) && $_FILES['image_input']['type'] == "image/jpeg") {
             $img_dir = getcwd() . "/images";
             $file = tempnam($img_dir, $_FILES['image_input']['name']);
             move_uploaded_file($_FILES['image_input']['tmp_name'], $file);
@@ -137,26 +173,31 @@ class ChapterController
         }
         return $thumbnail_path;
     }
+
     function InsertChapter()
     {
         $thumbnail_path = $this->getThumbnailPath();
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            if (isset($_POST['title_input']) && isset($_POST['chapter_number_input']) && isset($_POST['director_input']) && isset($_POST['writer_input']) && isset($_POST['description_input']) && isset($_POST['emision_date_input']) && isset($_POST['season_input'])) {
-                if (!$this->CheckIfExists($_POST['title_input'])) {
-                    $season_number = $_POST['season_input'];
-                    $season_id = $this->season_controller->GetSeasonId($season_number);
-                    $this->model->InsertChapter($_POST['title_input'], $_POST['chapter_number_input'], $_POST['director_input'], $_POST['writer_input'], $_POST['description_input'], $_POST['emision_date_input'], $season_id->id, $thumbnail_path);
-                    header('location:season/' . $season_number);
+        if ($logged) {
+            if ($admin) {
+                if (isset($_POST['title_input']) && isset($_POST['chapter_number_input']) && isset($_POST['director_input']) && isset($_POST['writer_input']) && isset($_POST['description_input']) && isset($_POST['emision_date_input']) && isset($_POST['season_input'])) {
+                    if (!$this->CheckIfExists($_POST['title_input'])) {
+                        $season_number = $_POST['season_input'];
+                        $season_id = $this->season_controller->GetSeasonId($season_number);
+                        $this->model->InsertChapter($_POST['title_input'], $_POST['chapter_number_input'], $_POST['director_input'], $_POST['writer_input'], $_POST['description_input'], $_POST['emision_date_input'], $season_id->id, $thumbnail_path);
+                        header('location:season/' . $season_number);
+                    } else {
+                        $this->view->RenderError('we already had that chapter', 'try with another one');
+                    }
                 } else {
-                    $this->view->RenderError('parece que el capitulo que intentas cargar ya estaba cargado', 'ingresa otro capitulo');
+                    $this->view->RenderError("you didn't complete all fields", 'do so and try again');
                 }
             } else {
-                $this->view->RenderError('parece que no completaste todos los campos', 'por favor completalos e intenta de nuevo');
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
             }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
 }

@@ -28,7 +28,7 @@
                         <span>{$chapter->emision_date}</span></td>
                     <td class="align-middle">
                         <div class="text-center"> <a href="detalle/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-secondary">Details</button></a></div>
-                        {if $logged == true}
+                        {if $admin}
                             <div class="btn-group"> <a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Edit</button></a>
                                 <a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Delete</button></a></div>
                         {/if}

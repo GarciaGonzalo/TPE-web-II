@@ -12,7 +12,6 @@
     // rutas
     $r->addRoute("home", "GET", "ChapterController", "Home");
     $r->addRoute("season/:SeasonNumber","GET","ChapterController","LoadSeason");
-    $r->addRoute("New","POST","ChapterController","InputChapter");
     $r->addRoute("login","GET","UserController","Login");
     $r->addRoute("verify","POST","UserController","VerifyUser");
     $r->addRoute("logout","GET","UserController","Logout");
@@ -33,7 +32,7 @@
     $r->addRoute("edit_user/:ID","GET","UserController","loadEdit");
     $r->addRoute("delete_user/:ID","GET","UserController","deleteUser");
     $r->addRoute("update_user/:ID","POST","UserController","editUser");
-    $r->addRoute("user_administration/","GET","UserController","LoadUserAdministration");
+    $r->addRoute("user_administration","GET","UserController","LoadUserAdministration");
 
     //Ruta por defecto.
     $r->setDefaultRoute("ChapterController", "Home");

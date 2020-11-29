@@ -66,13 +66,13 @@ class UserController
                     $_SESSION['LAST_ACTIVITY'] = time();
                     header("location:" . BASE_URL);
                 } else {
-                    $this->view->RenderError('La contraseña que introdujiste no coincide con el mail', 'si ya estas registrado intenta de nuevo checkeando tu ortografia');
+                    $this->view->RenderError('you introduced a wrong password', 'please check your spelling and try again');
                 }
             } else {
-                $this->view->RenderError('El mail que ingresaste parece no estar registrado', 'si ya estas registrado intenta de nuevo checkeando tu ortografia');
+                $this->view->RenderError('this mail is not registered', 'please check your spelling and try again');
             }
         } else {
-            $this->view->RenderError('Faltan completar campos', 'completa todos los campos y vuelve a intentar');
+            $this->view->RenderError("you didn't complete all fields", "do so and try again");
         }
     }
 
@@ -80,7 +80,7 @@ class UserController
     {
         $seasons = $this->season_model->GetSeasons();
         $logged = $this->CheckLoggedIn();
-        $admin = $this->user_controller->checkAdmin();
+        $admin = $this->checkAdmin();
         $this->view->RenderResgisterForm($seasons, $logged, $admin);
     }
     function Register()
@@ -101,17 +101,17 @@ class UserController
 
                         header("location:" . BASE_URL);
                     } else {
-                        $this->view->RenderError('Algo malo ha pasado', 'comunicate con el administrador de la pagina');
+                        $this->view->RenderError('something went wrong', 'try again later. If the problem persists contact the page administrator');
                     }
                 } else {
-                    $this->view->RenderError('ya hay un usuario con este mail', 'por ahora no podemos hacer nada, proba con otro email');
+                    $this->view->RenderError('this mail was already in use', 'contact the page administrator');
                 }
             } else {
-                $this->view->RenderError('faltan completar campos obligatorios', 'intenta de nuevo completando todos los campos');
+                $this->view->RenderError("you didn't complete all fields", "do so and try again");
             }
         } else {
             $this->Logout();
-            $this->view->RenderError('ya habia un usuario logeado', 'no se preocupe ya cerramos la sesion por usted');
+            $this->view->RenderError('there was a user logged in already', "don't worry we already closed it for you");
         }
     }
     function LoadUserAdministration()
@@ -120,10 +120,14 @@ class UserController
         $logged = $this->CheckLoggedIn();
         $admin = $this->checkAdmin();
         $user = $this->model->getAllUsers();
-        if ($logged && $admin) {
-            $this->view->RenderUserAdministration($seasons, $logged, $user, $admin);
+        if ($logged) {
+            if ($admin) {
+                $this->view->RenderUserAdministration($seasons, $logged, $user, $admin);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
     function editUser($params = null)
@@ -131,39 +135,53 @@ class UserController
         if (isset($_POST['email_input']) && isset($_POST['super_user_input'])) {
             $logged = $this->CheckLoggedIn();
             $admin = $this->checkAdmin();
-            if ($logged && $admin) {
-                $id_edit = $params[':ID'];
-                $this->model->UpdateUser($_POST['email_input'], $_POST['super_user_input'], $id_edit);
-                header('location:' . BASE_URL . 'user_administration');
+            if ($logged) {
+                if ($admin) {
+                    $id_edit = $params[':ID'];
+                    $this->model->UpdateUser($_POST['email_input'], $_POST['super_user_input'], $id_edit);
+                    header('location:' . BASE_URL . 'user_administration');
+                } else {
+                    $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+                }
             } else {
-                $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+                $this->view->RenderError("you're not logged in", 'log in and try again');
             }
+        } else {
+            $this->view->RenderError("you didn't complete all fields", "do so and try again");
         }
     }
     function deleteUser($params = null)
     {
         $logged = $this->CheckLoggedIn();
         $admin = $this->checkAdmin();
-        if ($logged && $admin) {
-            $id_borrar = $params[':ID'];
-            $this->model->DeleteUser($id_borrar);
-            header('location:' . BASE_URL . 'user_administration');
+        if ($logged) {
+            if ($admin) {
+                $id_borrar = $params[':ID'];
+                $this->model->DeleteUser($id_borrar);
+                header('location:' . BASE_URL . 'user_administration');
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
     function loadEdit($params = null)
     {
         $logged = $this->CheckLoggedIn();
         $admin = $this->checkAdmin();
-        if ($logged && $admin) {
-            $id_edit = $params[':ID'];
-            $seasons = $this->season_model->GetSeasons();
-            $user_edit = $this->model->GetUserId($id_edit);
+        if ($logged) {
+            if ($admin) {
+                $id_edit = $params[':ID'];
+                $seasons = $this->season_model->GetSeasons();
+                $user_edit = $this->model->GetUserId($id_edit);
 
-            $this->view->RenderEditUser($seasons, $logged, $user_edit, $admin);
+                $this->view->RenderEditUser($seasons, $logged, $user_edit, $admin);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('Necesitas permisos de super usuario para realizar esta funcion', 'contacta al administrador del sitio');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
     function Logout()

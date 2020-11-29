@@ -48,7 +48,7 @@ class ChapterModel
         if ($thumbnail_path !== NULL) {
             $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,thumbnail_path=?,chapter_number=? WHERE id=?');
             $sentencia->execute(array($title, $director, $writer, $description, $date, $thumbnail_path, $chapter_number, $id));
-        } else{
+        } else {
             $sentencia = $this->db->prepare('UPDATE chapter SET title=?,director=?,writer=?,description=?,emision_date=?,chapter_number=? WHERE id=?');
             $sentencia->execute(array($title, $director, $writer, $description, $date, $chapter_number, $id));
         }
@@ -72,5 +72,12 @@ class ChapterModel
         $sentencia = $this->db->prepare("SELECT * FROM chapter WHERE id=?");
         $sentencia->execute(array($id));
         return $sentencia->fetch(PDO::FETCH_OBJ);
+    }
+
+    function getThumbnailPath($id)
+    {
+        $query = $this->db->prepare("SELECT thumbnail_path FROM chapter WHERE id=?");
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
     }
 }

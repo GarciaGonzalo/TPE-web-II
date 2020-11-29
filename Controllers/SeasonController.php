@@ -21,14 +21,16 @@ class SeasonController
     {
         return $this->model->GetSeasons($id);
     }
-    function GetSeasonId($season){
+    function GetSeasonId($season)
+    {
         return $this->model->GetSeasonId($season);
     }
-    function LoadSeasons(){
-        $seasons=$this->GetSeasons();
+    function LoadSeasons()
+    {
+        $seasons = $this->GetSeasons();
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        $this->view->RenderSeasons($seasons,$logged,$admin);
+        $this->view->RenderSeasons($seasons, $logged, $admin);
     }
     function LoadEdit($params = null)
     {
@@ -38,37 +40,47 @@ class SeasonController
             $id_edit = $params[':ID'];
             $seasons = $this->model->GetSeasons();
             $season_to_edit =  $this->model->GetSeasons($id_edit);
-            
-            $this->view->RenderSeasonEdit($seasons, $logged,$season_to_edit,$admin);
+
+            $this->view->RenderSeasonEdit($seasons, $logged, $season_to_edit, $admin);
         } else {
             $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
         }
     }
     function EditSeason($params = null)
     {
-    if (isset($_POST['season_number_input']) && isset($_POST['chapter_count_input'])) {
-        $logged = $this->user_controller->CheckLoggedIn();
-        $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            $id_edit = $params[':ID'];
-            $this->model->UpdateSeason($_POST['season_number_input'],$_POST['chapter_count_input'],$id_edit);
-            header('location:'.BASE_URL.'seasons');
+        if (isset($_POST['season_number_input']) && isset($_POST['chapter_count_input'])) {
+            $logged = $this->user_controller->CheckLoggedIn();
+            $admin = $this->user_controller->checkAdmin();
+            if ($logged) {
+                if ($admin) {
+                    $id_edit = $params[':ID'];
+                    $this->model->UpdateSeason($_POST['season_number_input'], $_POST['chapter_count_input'], $id_edit);
+                    header('location:' . BASE_URL . 'seasons');
+                } else {
+                    $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+                }
+            } else {
+                $this->view->RenderError("you're not logged in", 'log in and try again');
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you didn't complete all fields", "please do so and try again");
         }
     }
-}
     function DeleteSeason($params = null)
     {
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            $id_borrar = $params[':ID'];
-            $this->chapterModel->DeleteAllChapters($id_borrar);
-            $this->model->DeleteSeason($id_borrar);
-            header('location:'.BASE_URL.'seasons');
+        if ($logged) {
+            if ($admin) {
+                $id_borrar = $params[':ID'];
+                $this->chapterModel->DeleteAllChapters($id_borrar);
+                $this->model->DeleteSeason($id_borrar);
+                header('location:' . BASE_URL . 'seasons');
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
     function UploadSeason()
@@ -76,23 +88,33 @@ class SeasonController
         $logged = $this->user_controller->CheckLoggedIn();
         $seasons = $this->model->GetSeasons();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            $this->view->RenderUploadSeasonModo($logged,$seasons,$admin);
+        if ($logged) {
+            if ($admin) {
+                $this->view->RenderUploadSeasonModo($logged, $seasons, $admin);
+            } else {
+                $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+            }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
     function InsertSeason()
     {
         $logged = $this->user_controller->CheckLoggedIn();
         $admin = $this->user_controller->checkAdmin();
-        if ($logged && $admin) {
-            if (isset($_POST['season_number_input']) && isset($_POST['chapter_count_input'])) {
-                $this->model->InsertSeason($_POST['season_number_input'],$_POST['chapter_count_input']);
-                header('location:'.BASE_URL.'seasons');
+        if (isset($_POST['season_number_input']) && isset($_POST['chapter_count_input'])) {
+            if ($logged) {
+                if ($admin) {
+                    $this->model->InsertSeason($_POST['season_number_input'], $_POST['chapter_count_input']);
+                    header('location:' . BASE_URL . 'seasons');
+                } else {
+                    $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
+                }
+            } else {
+                $this->view->RenderError("you're not logged in", 'log in and try again');
             }
         } else {
-            $this->view->RenderError('no estas loggeado', 'logueate e intenta de nuevo');
+            $this->view->RenderError("you didn't complete all fields", "please do so and try again");
         }
     }
 }
