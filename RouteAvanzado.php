@@ -29,9 +29,8 @@
     $r->addRoute("upload_season","POST","SeasonController","InsertSeason");
     $r->addRoute("register","GET","UserController","RegisterForm");
     $r->addRoute("register","POST","UserController","Register");
-    $r->addRoute("edit_user/:ID","GET","UserController","loadEdit");
+    $r->addRoute("super_user/:ID","GET","UserController","changeSuperUser");
     $r->addRoute("delete_user/:ID","GET","UserController","deleteUser");
-    $r->addRoute("update_user/:ID","POST","UserController","editUser");
     $r->addRoute("user_administration","GET","UserController","LoadUserAdministration");
 
     //Ruta por defecto.

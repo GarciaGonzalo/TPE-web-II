@@ -15,7 +15,9 @@ class CommentModel
         comment.content as 'content',
         comment.timestamp as 'timestamp',
         user.email as 'user'
-        FROM comment INNER JOIN user on comment.id_user = user.id WHERE id_chapter=?");
+        FROM comment INNER JOIN user on comment.id_user = user.id 
+        WHERE id_chapter=?
+        ORDER BY comment.timestamp ASC");
         $query->execute([$chapter_id]);
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
@@ -27,7 +29,7 @@ class CommentModel
         return $query->rowCount();
     }
 
-    function insertcomment($content,$rating,$id_chapter,$id_user)
+    function insertComment($content,$rating,$id_chapter,$id_user)
     {
         $query = $this->db->prepare('INSERT INTO comment (content,rating,id_chapter,id_user) VALUES(?,?,?,?)');
         return $query->execute([$content,$rating,$id_chapter,$id_user]);

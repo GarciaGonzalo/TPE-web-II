@@ -96,7 +96,7 @@ class UserController
                     if ($response) {
                         session_start();
                         $_SESSION['user'] = $_POST['email_input'];
-                        $_SESSION['user_id'] = $hashAndId->id;
+                        $_SESSION['user_id'] = $this->model->getHashAndId($_POST['email_input'])->id;
                         $_SESSION['LAST_ACTIVITY'] = time();
 
                         header("location:" . BASE_URL);
@@ -166,28 +166,28 @@ class UserController
             $this->view->RenderError("you're not logged in", 'log in and try again');
         }
     }
-    function loadEdit($params = null)
+
+    function Logout()
+    {
+        session_start();
+        session_destroy();
+        header('Location: ' . BASE_URL);
+    }
+
+    function changeSuperUser($params = null)
     {
         $logged = $this->CheckLoggedIn();
         $admin = $this->checkAdmin();
         if ($logged) {
             if ($admin) {
-                $id_edit = $params[':ID'];
-                $seasons = $this->season_model->GetSeasons();
-                $user_edit = $this->model->GetUserId($id_edit);
-
-                $this->view->RenderEditUser($seasons, $logged, $user_edit, $admin);
+                $id = $params[':ID'];
+                $this->model->changeSuperUser($id);
+                header('Location: ' . BASE_URL . '/user_administration');
             } else {
                 $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
             }
         } else {
             $this->view->RenderError("you're not logged in", 'log in and try again');
         }
-    }
-    function Logout()
-    {
-        session_start();
-        session_destroy();
-        header('Location: ' . BASE_URL);
     }
 }

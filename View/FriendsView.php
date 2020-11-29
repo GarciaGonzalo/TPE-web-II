@@ -113,12 +113,5 @@ class FriendsView
 
         $this->smarty->display('templates/user_administration.tpl');
     }
-    function RenderEditUser($seasons,$logged,$user,$admin){
-        $this->smarty->assign('seasons', $seasons);
-        $this->smarty->assign('logged', $logged);
-        $this->smarty->assign('user', $user);
-        $this->smarty->assign('admin', $admin);
-
-        $this->smarty->display('templates/edit_user.tpl');
-    }
+    
 }

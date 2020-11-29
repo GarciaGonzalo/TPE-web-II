@@ -41,4 +41,13 @@ class UserModel
         $query = $this->db->prepare('UPDATE user SET email =? , super_user =? WHERE id =?');
         $query->execute(array($email_input,$super_user_input,$id_edit));
     }
+    function changeSuperUser($id)
+    {
+        $query = $this->db->prepare('SELECT super_user FROM user where id=?');
+        $query->execute([$id]);
+        $superUser = $query->fetch(PDO::FETCH_OBJ)->super_user;
+        $superUser = !$superUser;
+        $query = $this->db->prepare('UPDATE user SET super_user=? WHERE id=?');
+        $query->execute([$superUser,$id]);
+    }
 }
