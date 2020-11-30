@@ -21,7 +21,7 @@ let app = new Vue(
                         const arrUrl = window.location.href.split('/');
                         arrUrl.pop();
                         arrUrl.pop();
-                        const baseUrl =arrUrl.join('/');
+                        const baseUrl = arrUrl.join('/');
                         window.location.href = baseUrl + "/login";
                     } else {
                         alert("no tienes permisos para lo que intentas hacer")
@@ -89,7 +89,10 @@ async function fetchPostComment(content, rating, chapterId) {
         fetchComments();
     } else {
         if (res.status == 401) {
-            const baseUrl = "http://localhost/facu/web%20II/practicos/TPE-web-II"; //hay que dinamizar esto
+            const arrUrl = window.location.href.split('/');
+            arrUrl.pop();
+            arrUrl.pop();
+            const baseUrl = arrUrl.join('/');
             window.location.href = baseUrl + "/login";
         }
     }
