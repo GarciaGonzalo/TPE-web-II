@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 01, 2020 at 05:46 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.6
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 30-11-2020 a las 22:02:44
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `friends_db`
+-- Base de datos: `friends_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chapter`
+-- Estructura de tabla para la tabla `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -40,7 +40,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `chapter`
+-- Volcado de datos para la tabla `chapter`
 --
 
 INSERT INTO `chapter` (`id`, `title`, `chapter_number`, `director`, `writer`, `description`, `emision_date`, `thumbnail_path`, `id_season`) VALUES
@@ -113,7 +113,7 @@ INSERT INTO `chapter` (`id`, `title`, `chapter_number`, `director`, `writer`, `d
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
+-- Estructura de tabla para la tabla `comment`
 --
 
 CREATE TABLE `comment` (
@@ -126,7 +126,7 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `comment`
+-- Volcado de datos para la tabla `comment`
 --
 
 INSERT INTO `comment` (`id`, `content`, `rating`, `timestamp`, `id_chapter`, `id_user`) VALUES
@@ -138,13 +138,20 @@ INSERT INTO `comment` (`id`, `content`, `rating`, `timestamp`, `id_chapter`, `id
 (1135, 'asdasdsa', 3, '2020-11-20', 11, 3),
 (1136, 'llueve de llover', 3, '2020-11-20', 11, 3),
 (1137, 'tengo tres tigres tres tigres tiene tengo', 3, '2020-11-20', 11, 3),
+(1165, 'raul', 5, '2020-11-29', 5, 13),
 (1170, 'asd', 5, '2020-11-29', 5, 1),
-(1179, 'este es mi comentario, alto comentario', 4, '2020-11-30', 5, 15);
+(1171, ' ', 3, '2020-11-29', 5, 1),
+(1172, ' ', 5, '2020-11-29', 5, 1),
+(1173, ' ', 5, '2020-11-29', 5, 1),
+(1174, ' ', 5, '2020-11-29', 5, 1),
+(1175, ' ', 5, '2020-11-29', 5, 1),
+(1176, ' ', 5, '2020-11-29', 5, 1),
+(1177, ' ', 5, '2020-11-29', 5, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `season`
+-- Estructura de tabla para la tabla `season`
 --
 
 CREATE TABLE `season` (
@@ -154,7 +161,7 @@ CREATE TABLE `season` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `season`
+-- Volcado de datos para la tabla `season`
 --
 
 INSERT INTO `season` (`id`, `season`, `chapter_count`) VALUES
@@ -172,7 +179,7 @@ INSERT INTO `season` (`id`, `season`, `chapter_count`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Estructura de tabla para la tabla `user`
 --
 
 CREATE TABLE `user` (
@@ -183,27 +190,29 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Volcado de datos para la tabla `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `super_user`) VALUES
 (1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC', 1),
 (3, 'mariano.arias12@gmail.com', '$2y$10$7REyQFCM/rCdXSM.mbwHve6E6IH8z9d0cH9Ph.MM3FoMnQFhgadcm', 0),
-(15, 'fry.gato@fakedata.com', '$2y$10$nBoHYnGsApAu11volHQ8yuwPAG3WRKewKfjQ9x9FbIC/C5.hZ.4eW', 0);
+(12, 'fry@cato.paw', '$2y$10$4eDvq01Ke/M4urjMha5eVexAKuMg0Lb8hs7hox6aeWmmdTFMNulj.', 0),
+(13, 'asd@asd.com', '$2y$10$ea5tNNk1vdsUM2JMjh4d4OQSlo5lF3iPFP8HUsfTAfDnoIO/BHScy', 0),
+(14, 'perroloco@perroloco.com', '$2y$10$/XwfP/JIEOMW.JWBpFQhD.s9CwyNtZ0dMW1L17SEIyoTKcuirXJtW', 0);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `chapter`
+-- Indices de la tabla `chapter`
 --
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`id`),
   ADD KEY `INDEX` (`id_season`);
 
 --
--- Indexes for table `comment`
+-- Indices de la tabla `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`),
@@ -211,57 +220,57 @@ ALTER TABLE `comment`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Indexes for table `season`
+-- Indices de la tabla `season`
 --
 ALTER TABLE `season`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `user`
+-- Indices de la tabla `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `chapter`
+-- AUTO_INCREMENT de la tabla `chapter`
 --
 ALTER TABLE `chapter`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
--- AUTO_INCREMENT for table `comment`
+-- AUTO_INCREMENT de la tabla `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1180;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1179;
 
 --
--- AUTO_INCREMENT for table `season`
+-- AUTO_INCREMENT de la tabla `season`
 --
 ALTER TABLE `season`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `chapter`
+-- Filtros para la tabla `chapter`
 --
 ALTER TABLE `chapter`
   ADD CONSTRAINT `chapter_ibfk_1` FOREIGN KEY (`id_season`) REFERENCES `season` (`id`);
 
 --
--- Constraints for table `comment`
+-- Filtros para la tabla `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`id_chapter`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
