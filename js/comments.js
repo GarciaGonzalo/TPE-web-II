@@ -21,7 +21,7 @@ let app = new Vue(
                         const arrUrl = window.location.href.split('/');
                         arrUrl.pop();
                         arrUrl.pop();
-                        const baseUrl =arrUrl.join('/');
+                        const baseUrl = arrUrl.join('/');
                         window.location.href = baseUrl + "/login";
                     } else {
                         alert("no tienes permisos para lo que intentas hacer")
