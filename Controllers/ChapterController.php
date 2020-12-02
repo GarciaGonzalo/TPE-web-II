@@ -1,6 +1,7 @@
 <?php
 require_once './View/FriendsView.php';
 require_once './Model/ChapterModel.php';
+require_once 'Model/ratingModel.php';
 require_once 'UserController.php';
 require_once 'seasonController.php';
 
@@ -52,9 +53,15 @@ class ChapterController
             $admin = $this->user_controller->checkAdmin();
             $seasons = $this->season_controller->GetSeasons();
             $season = $this->season_controller->GetSeasons($chapter_details->id_season);
+            $ratingModel = new ratingModel();
+            if (!isset($_SESSION)) {
+                session_start();
+            }
+            $id_user =  $_SESSION['user_id'];
+            $rating = $ratingModel->getRating($id_details, $id_user);
             $season_number = $season[0]->season;
 
-            $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number, $admin);
+            $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number, $admin, $rating);
         } else {
             $this->view->RenderError("we can't get your content", "check your link and your connection, then try again");
         }

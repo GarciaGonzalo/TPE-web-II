@@ -57,10 +57,9 @@ class CommentsApiController extends apiController
             $data = $this->getData();
             if(!empty($data->content)){
                 $content = $data->content;
-                $rating = $data->rating;
                 $id_chapter = $data->id_chapter;
                 $id_user = $_SESSION['user_id'];
-                $inserted = $this->model->insertComment($content,$rating,$id_chapter,$id_user);
+                $inserted = $this->model->insertComment($content,$id_chapter,$id_user);
                 if ($inserted) {
                     $this->view->response("The request is complete, and a new resource is created.", 201);
                 } else {

@@ -2,6 +2,7 @@
     require_once 'Controllers/ChapterController.php';
     require_once 'Controllers/UserController.php';
     require_once 'Controllers/SeasonController.php';
+    require_once 'Controllers/ratingController.php';
     require_once 'RouterClass.php';
     
     // CONSTANTES PARA RUTEO
@@ -32,6 +33,8 @@
     $r->addRoute("super_user/:ID","GET","UserController","changeSuperUser");
     $r->addRoute("delete_user/:ID","GET","UserController","deleteUser");
     $r->addRoute("user_administration","GET","UserController","LoadUserAdministration");
+
+    $r->addRoute("rate/:ID","POST","ratingController","rateChapter");
 
     //Ruta por defecto.
     $r->setDefaultRoute("ChapterController", "Home");

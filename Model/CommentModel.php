@@ -11,7 +11,6 @@ class CommentModel
     {
         $query = $this->db->prepare("SELECT 
         comment.id as 'id',
-        comment.rating as 'rating',
         comment.content as 'content',
         comment.timestamp as 'timestamp',
         user.email as 'user'
@@ -29,9 +28,9 @@ class CommentModel
         return $query->rowCount();
     }
 
-    function insertComment($content,$rating,$id_chapter,$id_user)
+    function insertComment($content,$id_chapter,$id_user)
     {
-        $query = $this->db->prepare('INSERT INTO comment (content,rating,id_chapter,id_user) VALUES(?,?,?,?)');
-        return $query->execute([$content,$rating,$id_chapter,$id_user]);
+        $query = $this->db->prepare('INSERT INTO comment (content,id_chapter,id_user) VALUES(?,?,?)');
+        return $query->execute([$content,$id_chapter,$id_user]);
     }
 }

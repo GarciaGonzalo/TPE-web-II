@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2020 a las 22:02:44
+-- Tiempo de generación: 02-12-2020 a las 04:13:51
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -119,7 +119,6 @@ INSERT INTO `chapter` (`id`, `title`, `chapter_number`, `director`, `writer`, `d
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
   `content` varchar(560) NOT NULL,
-  `rating` int(1) NOT NULL,
   `timestamp` date NOT NULL DEFAULT current_timestamp(),
   `id_chapter` int(11) NOT NULL,
   `id_user` int(11) NOT NULL
@@ -129,24 +128,39 @@ CREATE TABLE `comment` (
 -- Volcado de datos para la tabla `comment`
 --
 
-INSERT INTO `comment` (`id`, `content`, `rating`, `timestamp`, `id_chapter`, `id_user`) VALUES
-(1, 'esto es un comentario lorem ipsum porros lorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porros', 1, '2020-11-20', 18, 3),
-(2, 'Loved this episode, really had a laugh, that part where Chandler said that thing was great. Love it.', 5, '2020-11-20', 11, 1),
-(1132, 'si este comentario se postea correctamente soy un genio del desarrollo web', 3, '2020-11-20', 11, 3),
-(1133, 'llueve de llover', 3, '2020-11-20', 11, 3),
-(1134, 'asdasdsa', 3, '2020-11-20', 11, 3),
-(1135, 'asdasdsa', 3, '2020-11-20', 11, 3),
-(1136, 'llueve de llover', 3, '2020-11-20', 11, 3),
-(1137, 'tengo tres tigres tres tigres tiene tengo', 3, '2020-11-20', 11, 3),
-(1165, 'raul', 5, '2020-11-29', 5, 13),
-(1170, 'asd', 5, '2020-11-29', 5, 1),
-(1171, ' ', 3, '2020-11-29', 5, 1),
-(1172, ' ', 5, '2020-11-29', 5, 1),
-(1173, ' ', 5, '2020-11-29', 5, 1),
-(1174, ' ', 5, '2020-11-29', 5, 1),
-(1175, ' ', 5, '2020-11-29', 5, 1),
-(1176, ' ', 5, '2020-11-29', 5, 1),
-(1177, ' ', 5, '2020-11-29', 5, 1);
+INSERT INTO `comment` (`id`, `content`, `timestamp`, `id_chapter`, `id_user`) VALUES
+(1, 'esto es un comentario lorem ipsum porros lorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porros', '2020-11-20', 18, 3),
+(2, 'Loved this episode, really had a laugh, that part where Chandler said that thing was great. Love it.', '2020-11-20', 11, 1),
+(1132, 'si este comentario se postea correctamente soy un genio del desarrollo web', '2020-11-20', 11, 3),
+(1133, 'llueve de llover', '2020-11-20', 11, 3),
+(1136, 'llueve de llover', '2020-11-20', 11, 3),
+(1137, 'tengo tres tigres tres tigres tiene tengo', '2020-11-20', 11, 3),
+(1165, 'raul', '2020-11-29', 5, 13),
+(1179, 'comento', '2020-12-01', 12, 3),
+(1180, ' comento nuevamente', '2020-12-01', 12, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `rating`
+--
+
+CREATE TABLE `rating` (
+  `id` int(11) NOT NULL,
+  `rating` int(5) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_chapter` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `rating`
+--
+
+INSERT INTO `rating` (`id`, `rating`, `id_user`, `id_chapter`) VALUES
+(1, 5, 3, 11),
+(2, 4, 12, 11),
+(3, 3, 3, 12),
+(4, 5, 1, 11);
 
 -- --------------------------------------------------------
 
@@ -220,6 +234,14 @@ ALTER TABLE `comment`
   ADD KEY `id_user` (`id_user`);
 
 --
+-- Indices de la tabla `rating`
+--
+ALTER TABLE `rating`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`),
+  ADD KEY `id_chapter` (`id_chapter`);
+
+--
 -- Indices de la tabla `season`
 --
 ALTER TABLE `season`
@@ -245,7 +267,13 @@ ALTER TABLE `chapter`
 -- AUTO_INCREMENT de la tabla `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1179;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1181;
+
+--
+-- AUTO_INCREMENT de la tabla `rating`
+--
+ALTER TABLE `rating`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `season`
@@ -275,6 +303,13 @@ ALTER TABLE `chapter`
 ALTER TABLE `comment`
   ADD CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`id_chapter`) REFERENCES `chapter` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `rating`
+--
+ALTER TABLE `rating`
+  ADD CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`id_chapter`) REFERENCES `chapter` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

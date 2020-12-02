@@ -23,9 +23,9 @@ class ChapterModel
                 chapter.thumbnail_path as thumbnail_path,
                 season.id id_season,
                 season.season season_number   
-            FROM 
-            chapter INNER JOIN season ON chapter.id_season = season.id 
-            ORDER BY season.season ASC"
+                FROM 
+                chapter INNER JOIN season ON chapter.id_season = season.id 
+                ORDER BY season.season ASC"
             );
             $sentencia->execute();
         }
@@ -69,7 +69,20 @@ class ChapterModel
     }
     function GetChapter($id)
     {
-        $sentencia = $this->db->prepare("SELECT * FROM chapter WHERE id=?");
+        $sentencia = $this->db->prepare("SELECT 
+        chapter.id,
+        chapter.title,
+        chapter.chapter_number,
+        chapter.director,
+        chapter.writer,
+        chapter.description,
+        chapter.emision_date,
+        chapter.thumbnail_path,
+        chapter.id_season,
+        AVG(rating.rating) rating
+        FROM chapter
+        INNER JOIN rating on chapter.id = rating.id_chapter
+        WHERE chapter.id=11");
         $sentencia->execute(array($id));
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }

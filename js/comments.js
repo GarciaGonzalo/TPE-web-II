@@ -51,17 +51,6 @@ function getChapterId() {
     return params[parseInt(params.length) - 1];
 }
 
-function buttonThing() {
-    let deleteButtons = document.getElementsByClassName("deleteComment");
-    if (deleteButtons.length > 0) {
-        deleteButtons.forEach(button => {
-            button.addEventListener("click", fetchDeleteComment(this.dataset.id));
-            console.log("llegaste, varias veces");
-            console.log(button.dataset.id);
-        });
-    }
-}
-
 async function fetchComments() {
     let chapterId = getChapterId();
     const res = await fetch("api/comments/" + chapterId);
@@ -75,7 +64,6 @@ async function fetchComments() {
 async function fetchPostComment(content, rating, chapterId) {
     let commentData = {
         content: content,
-        rating: rating,
         id_chapter: chapterId,
     }
 
@@ -89,7 +77,10 @@ async function fetchPostComment(content, rating, chapterId) {
         fetchComments();
     } else {
         if (res.status == 401) {
-            const baseUrl = "http://localhost/facu/web%20II/practicos/TPE-web-II"; //hay que dinamizar esto
+            const arrUrl = window.location.href.split('/');
+            arrUrl.pop();
+            arrUrl.pop();
+            const baseUrl =arrUrl.join('/');
             window.location.href = baseUrl + "/login";
         }
     }
