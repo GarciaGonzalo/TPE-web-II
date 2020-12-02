@@ -139,6 +139,8 @@ class ChapterController
         if ($logged) {
             if ($admin) {
                 $id = $params[':ID'];
+                $rating_model = new ratingModel();
+                $rating_model->deleteRatingChapter($id);
                 $old_path = $this->model->getThumbnailPath($id);
                 $this->deleteFile($old_path->thumbnail_path);
                 $id_season = $this->model->DeleteChapter($id);

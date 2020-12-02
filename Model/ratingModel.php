@@ -32,4 +32,15 @@ class ratingModel
         $query->execute([$rating,$id_user,$id_chapter]);
         return $query->rowCount();
     }
+    function deleteRatingChapter($id_chapter)
+    {
+        $query = $this->db->prepare("DELETE FROM rating WHERE id_chapter =?");
+        $query->execute([$id_chapter]);
+    }
+
+    function deleteRatingUser($id_user)
+    {
+        $query = $this->db->prepare("DELETE FROM rating WHERE id_user=?");
+        $query->execute([$id_user]);
+    }
 }

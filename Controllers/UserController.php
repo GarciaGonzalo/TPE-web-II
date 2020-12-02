@@ -157,6 +157,8 @@ class UserController
         if ($logged) {
             if ($admin) {
                 $id_borrar = $params[':ID'];
+                $rating_model = new ratingModel();
+                $rating_model->deleteRatingUser($id_borrar);
                 $this->model->DeleteUser($id_borrar);
                 header('location:' . BASE_URL . 'user_administration');
             } else {
