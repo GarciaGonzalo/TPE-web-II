@@ -82,7 +82,7 @@ class ChapterModel
         AVG(rating.rating) rating
         FROM chapter
         INNER JOIN rating on chapter.id = rating.id_chapter
-        WHERE chapter.id=11");
+        WHERE chapter.id=?");
         $sentencia->execute(array($id));
         return $sentencia->fetch(PDO::FETCH_OBJ);
     }

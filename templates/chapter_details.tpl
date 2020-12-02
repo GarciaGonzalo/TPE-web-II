@@ -14,7 +14,7 @@
             <li class="bg-secondary list-group-item">First emision: {$chapter->emision_date}</li>
             <li class="bg-secondary list-group-item">User rating: {$chapter->rating}</li>
         </ul>
-        {if $logged == true}
+        {if $admin == true}
             <div class="card-body justify-content-around row">
                 <div class="col"><a href="edit modo/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Edit </button></a></div>
                 <div class="col"><a href="delete chapter/{$chapter->id}"><button id="ver_detalle" type="button" class="btn btn-danger">Delete</button></a></div>
