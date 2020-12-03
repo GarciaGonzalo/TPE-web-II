@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2020 a las 04:13:51
+-- Tiempo de generación: 03-12-2020 a las 02:21:09
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.6
 
@@ -129,15 +129,7 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `content`, `timestamp`, `id_chapter`, `id_user`) VALUES
-(1, 'esto es un comentario lorem ipsum porros lorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porroslorem ipsum porros', '2020-11-20', 18, 3),
-(2, 'Loved this episode, really had a laugh, that part where Chandler said that thing was great. Love it.', '2020-11-20', 11, 1),
-(1132, 'si este comentario se postea correctamente soy un genio del desarrollo web', '2020-11-20', 11, 3),
-(1133, 'llueve de llover', '2020-11-20', 11, 3),
-(1136, 'llueve de llover', '2020-11-20', 11, 3),
-(1137, 'tengo tres tigres tres tigres tiene tengo', '2020-11-20', 11, 3),
-(1165, 'raul', '2020-11-29', 5, 13),
-(1179, 'comento', '2020-12-01', 12, 3),
-(1180, ' comento nuevamente', '2020-12-01', 12, 3);
+(2, 'Loved this episode, really had a laugh, that part where Chandler said that thing was great. Love it.', '2020-11-20', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -157,9 +149,6 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`id`, `rating`, `id_user`, `id_chapter`) VALUES
-(1, 5, 3, 11),
-(2, 4, 12, 11),
-(3, 3, 3, 12),
 (4, 5, 1, 11);
 
 -- --------------------------------------------------------
@@ -209,10 +198,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `password`, `super_user`) VALUES
 (1, 'user@mermelada.com', '$2y$10$wdxuWxWM5pMB.x9ISNsMT.4JCgSHnQ./1VbVjsjA8haNFdrarSOpC', 1),
-(3, 'mariano.arias12@gmail.com', '$2y$10$7REyQFCM/rCdXSM.mbwHve6E6IH8z9d0cH9Ph.MM3FoMnQFhgadcm', 0),
-(12, 'fry@cato.paw', '$2y$10$4eDvq01Ke/M4urjMha5eVexAKuMg0Lb8hs7hox6aeWmmdTFMNulj.', 0),
-(13, 'asd@asd.com', '$2y$10$ea5tNNk1vdsUM2JMjh4d4OQSlo5lF3iPFP8HUsfTAfDnoIO/BHScy', 0),
-(14, 'perroloco@perroloco.com', '$2y$10$/XwfP/JIEOMW.JWBpFQhD.s9CwyNtZ0dMW1L17SEIyoTKcuirXJtW', 0);
+(16, 'other@user', '$2y$10$IlzNQ79Qf2b6jB06.YeQhehY77SnLYOg.Y.jhKWGsimnEL7B.zCai', 0);
 
 --
 -- Índices para tablas volcadas
@@ -273,7 +259,7 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT de la tabla `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `season`
@@ -285,7 +271,7 @@ ALTER TABLE `season`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Restricciones para tablas volcadas
