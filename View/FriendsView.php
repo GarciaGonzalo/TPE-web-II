@@ -106,12 +106,13 @@ class FriendsView
 
         $this->smarty->display('templates/chapter_details.tpl');
     }
-    function RenderUserAdministration($seasons, $logged, $user, $admin)
+    function RenderUserAdministration($seasons, $logged, $users, $admin,$id_user)
     {
         $this->smarty->assign('seasons', $seasons);
         $this->smarty->assign('logged', $logged);
-        $this->smarty->assign('user', $user);
+        $this->smarty->assign('users', $users);
         $this->smarty->assign('admin', $admin);
+        $this->smarty->assign('current_userID', $id_user);
 
         $this->smarty->display('templates/user_administration.tpl');
     }

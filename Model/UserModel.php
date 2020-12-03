@@ -50,4 +50,10 @@ class UserModel
         $query = $this->db->prepare('UPDATE user SET super_user=? WHERE id=?');
         $query->execute([$superUser,$id]);
     }
+    function superUserCount()
+    {
+        $query = $this->db->prepare('SELECT * FROM user WHERE super_user=1');
+        $query->execute();
+        return $query->rowCount();
+    }
 }

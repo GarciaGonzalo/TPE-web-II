@@ -53,12 +53,15 @@ class ChapterController
             $admin = $this->user_controller->checkAdmin();
             $seasons = $this->season_controller->GetSeasons();
             $season = $this->season_controller->GetSeasons($chapter_details->id_season);
-            $ratingModel = new ratingModel();
+            $rating = null;
             if (!isset($_SESSION)) {
                 session_start();
             }
-            $id_user =  $_SESSION['user_id'];
-            $rating = $ratingModel->getRating($id_details, $id_user);
+            if (isset($_SESSION['user_id'])) {
+                $id_user =  $_SESSION['user_id'];
+                $ratingModel = new ratingModel();
+                $rating = $ratingModel->getRating($id_details, $id_user);
+            }
             $season_number = $season[0]->season;
 
             $this->view->RenderDetails($seasons, $logged, $chapter_details, $season_number, $admin, $rating);

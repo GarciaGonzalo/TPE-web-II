@@ -119,10 +119,14 @@ class UserController
         $seasons = $this->season_model->GetSeasons();
         $logged = $this->CheckLoggedIn();
         $admin = $this->checkAdmin();
-        $user = $this->model->getAllUsers();
+        $users = $this->model->getAllUsers();
         if ($logged) {
             if ($admin) {
-                $this->view->RenderUserAdministration($seasons, $logged, $user, $admin);
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+                $id_user =  $_SESSION['user_id'];
+                $this->view->RenderUserAdministration($seasons, $logged, $users, $admin, $id_user);
             } else {
                 $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
             }
@@ -156,11 +160,24 @@ class UserController
         $admin = $this->checkAdmin();
         if ($logged) {
             if ($admin) {
-                $id_borrar = $params[':ID'];
-                $rating_model = new ratingModel();
-                $rating_model->deleteRatingUser($id_borrar);
-                $this->model->DeleteUser($id_borrar);
-                header('location:' . BASE_URL . 'user_administration');
+                if ($this->model->superUserCount() > 1) {
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    $id_user =  $_SESSION['user_id'];
+                    $id_borrar = $params[':ID'];
+                    $rating_model = new ratingModel();
+                    $rating_model->deleteRatingUser($id_borrar);
+                    $this->model->DeleteUser($id_borrar);
+
+                    if ($id_borrar == $id_user) {
+                        $this->Logout();
+                    } else {
+                        header('location:' . BASE_URL . 'user_administration');
+                    }
+                }else{
+                    $this->view->RenderError("you're the last super user","contact the page administrator");
+                }
             } else {
                 $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
             }
@@ -183,8 +200,15 @@ class UserController
         if ($logged) {
             if ($admin) {
                 $id = $params[':ID'];
-                $this->model->changeSuperUser($id);
-                header('Location: ' . BASE_URL . '/user_administration');
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+                if ($id == $_SESSION['user_id']) {
+                    $this->view->RenderError("you can't take your own super user out", "contact page administrator");
+                } else {
+                    $this->model->changeSuperUser($id);
+                    header('Location: ' . BASE_URL . '/user_administration');
+                }
             } else {
                 $this->view->RenderError("you don't have super-user rights", "if you think this is a mistake contact the page administrator");
             }

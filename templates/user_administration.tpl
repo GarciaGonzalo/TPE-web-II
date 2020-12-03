@@ -1,6 +1,6 @@
 {include file="head.tpl"}
 
-{include file="navbar.tpl" user=$user logged=$logged seasons=$seasons}
+{include file="navbar.tpl" logged=$logged seasons=$seasons}
 <div class="container">
     <table class="table table-dark">
         <thead>
@@ -11,14 +11,16 @@
             </tr>
         </thead>
         <tbody>
-            {foreach from=$user item=users}
+            {foreach from=$users item=user}
                 <tr>
-                    <td>{$users->email}</td>
-                    <td>{if $users->super_user eq 0}No{else}Yes{/if}</td>
-                    {if $users->super_user eq 0}
-                    <td><a href="super_user/{$users->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Change super user</button></a></td>
+                    <td>{$user->email}</td>
+                    <td>{if $user->super_user eq 0}No{else}Yes{/if}</td>
+                    {if $user->id == $current_userID}
+                        <td> </td>
+                    {else}
+                        <td><a href="super_user/{$user->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Change super user</button></a></td>
                     {/if}
-                    <td><a href="delete_user/{$users->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Delete User</button></a></td>
+                    <td><a href="delete_user/{$user->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Delete User</button></a></td>
                 </tr>
             {/foreach}
         </tbody>
