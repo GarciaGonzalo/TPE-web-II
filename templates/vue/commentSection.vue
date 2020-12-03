@@ -16,7 +16,7 @@
     </ul>
 </div>
 <form id="commentForm" class="commentForm"> 
-    <input class="textField" required type="text" name="comment" id="commentInput" placeholder="your comment here">
+    <input class="textField" required type="text"style="background-color : #212529;"" name="comment" id="commentInput" placeholder="your comment here">
     <div class="form-row text-center">
         <button type="submit" class="btn btn-primary mx-auto">Comentar</button>
     </div>

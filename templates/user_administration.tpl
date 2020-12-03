@@ -15,7 +15,9 @@
                 <tr>
                     <td>{$users->email}</td>
                     <td>{if $users->super_user eq 0}No{else}Yes{/if}</td>
+                    {if $users->super_user eq 0}
                     <td><a href="super_user/{$users->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Change super user</button></a></td>
+                    {/if}
                     <td><a href="delete_user/{$users->id}"><button id="ver_detalle" type="button" class="btn btn-warning">Delete User</button></a></td>
                 </tr>
             {/foreach}
