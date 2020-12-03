@@ -1,5 +1,5 @@
+document.addEventListener("DOMContentLoaded",fetchComments());
 document.getElementById("commentForm").addEventListener("submit", postComment);
-
 let app = new Vue(
     {
         el: '#commentSection',
